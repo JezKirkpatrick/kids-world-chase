@@ -95,7 +95,7 @@ export async function GET(req: NextRequest) {
       max_tokens: 4000,
       messages: [{
         role: 'user',
-        content: `Generate exactly 20 fun and educational geography trivia questions for today's daily quiz (${today}). This is for kids aged 8–13, so questions should be engaging, age-appropriate, and educational — not too easy, but not too hard either.
+        content: `Generate exactly 20 fun and educational geography trivia questions for today's daily quiz (${today}). This is for kids aged 8–16, so questions should be engaging, age-appropriate, and educational — not too easy, but not too hard either.
 
 TODAY'S THEME: ${todayTheme}
 

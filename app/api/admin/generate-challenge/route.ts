@@ -27,7 +27,7 @@ FOCUS ON: ${eventTheme.regionFocus}
 AVOID: ${eventTheme.avoidRegions}\n`
     : ''
 
-  return `You are the friendly game master for "Kids World Chase" — an educational geography game designed for children aged 8–13.
+  return `You are the friendly game master for "Kids World Chase" — an educational geography game designed for children aged 8–16.
 ${themeSection}
 Generate ONE Street View Observation challenge for Round ${roundNumber} (${diffLabel} level).
 
@@ -92,7 +92,7 @@ FOCUS ON: ${eventTheme.regionFocus}
 AVOID: ${eventTheme.avoidRegions}\n`
     : ''
 
-  return `You are the friendly game master for "Kids World Chase" — an educational geography adventure game for children aged 8–13.
+  return `You are the friendly game master for "Kids World Chase" — an educational geography adventure game for children aged 8–16.
 ${themeSection}
 Generate ONE exciting, educational challenge for Round ${roundNumber} (${diffLabel} level).
 
