@@ -2,9 +2,9 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'World Chase',
-    short_name: 'WorldChase',
-    description: 'Hunt the World. Claim the Crown. Monthly competitive geography battle.',
+    name: 'Kids World Chase',
+    short_name: 'KidsWC',
+    description: 'Explore the World. Become a Champion! Educational geography adventure for kids.',
     start_url: '/dashboard',
     display: 'standalone',
     background_color: '#0B1628',

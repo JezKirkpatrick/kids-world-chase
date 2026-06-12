@@ -1,5 +1,5 @@
-// World Chase Service Worker
-const CACHE = 'worldchase-v1'
+﻿// Kids World Chase Service Worker
+const CACHE = 'kidsworldchase-v1'
 
 // Assets to pre-cache on install
 const PRECACHE = [
@@ -30,8 +30,8 @@ self.addEventListener('activate', event => {
 self.addEventListener('push', event => {
   if (!event.data) return
   let data = {}
-  try { data = event.data.json() } catch { data = { title: 'World Chase', body: event.data.text() } }
-  const { title = 'World Chase', body = '', url = '/' } = data
+  try { data = event.data.json() } catch { data = { title: 'Kids World Chase', body: event.data.text() } }
+  const { title = 'Kids World Chase', body = '', url = '/' } = data
   event.waitUntil(
     self.registration.showNotification(title, {
       body,
@@ -69,10 +69,10 @@ self.addEventListener('fetch', event => {
     !event.request.url.startsWith(self.location.origin)
   ) return
 
-  // API routes — always network-only
+  // API routes â€” always network-only
   if (url.pathname.startsWith('/api/')) return
 
-  // Hashed static assets (_next/static) — cache-first, never expire
+  // Hashed static assets (_next/static) â€” cache-first, never expire
   if (url.pathname.startsWith('/_next/static/')) {
     event.respondWith(
       caches.match(event.request).then(cached => {
@@ -87,7 +87,7 @@ self.addEventListener('fetch', event => {
     return
   }
 
-  // All other requests — network-first
+  // All other requests â€” network-first
   event.respondWith(
     fetch(event.request)
       .then(res => {
@@ -108,3 +108,4 @@ self.addEventListener('fetch', event => {
       )
   )
 })
+
