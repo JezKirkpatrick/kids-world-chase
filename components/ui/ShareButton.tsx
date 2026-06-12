@@ -1,0 +1,122 @@
+'use client'
+import { useState, useRef, useEffect } from 'react'
+
+const SHARE_TEXT = 'Come play WorldChase 🌍 — a daily geography hunt. Race to name locations around the globe!'
+const FB_APP_ID  = '1613984633019651'
+
+export default function ShareButton({ className }: { className?: string }) {
+  const [open, setOpen]     = useState(false)
+  const [copied, setCopied] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handler(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const url  = typeof window !== 'undefined' ? window.location.origin : ''
+  const text = encodeURIComponent(SHARE_TEXT)
+  const link = encodeURIComponent(url)
+
+  async function nativeShare() {
+    try {
+      await navigator.share({ title: 'WorldChase', text: SHARE_TEXT, url })
+    } catch { /* cancelled */ }
+    setOpen(false)
+  }
+
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2500)
+    } catch {
+      window.prompt('Copy this link:', url)
+    }
+    setOpen(false)
+  }
+
+  function openUrl(href: string) {
+    window.open(href, '_blank', 'noopener,noreferrer')
+    setOpen(false)
+  }
+
+  function shareToMessenger() {
+    const rawUrl = typeof window !== 'undefined' ? window.location.origin : ''
+    const encoded = encodeURIComponent(rawUrl)
+    if (isMobile) {
+      window.location.href = `fb-messenger://share/?link=${encoded}`
+    } else {
+      window.open(
+        `https://www.facebook.com/dialog/send?app_id=${FB_APP_ID}&link=${encoded}&redirect_uri=${encoded}`,
+        'fb-messenger-send',
+        'width=600,height=500,resizable=yes'
+      )
+    }
+    setOpen(false)
+  }
+
+  const isMobile = typeof navigator !== 'undefined' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+  const hasNativeShare = typeof navigator !== 'undefined' && typeof navigator.share === 'function'
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => isMobile && hasNativeShare ? nativeShare() : setOpen(o => !o)}
+        className={className}
+      >
+        {copied ? '✓ COPIED!' : '📤 SHARE'}
+      </button>
+
+      {open && (
+        <div className="absolute top-full mt-2 left-0 z-50 bg-navy-light border border-white/15 shadow-xl min-w-[190px] py-1"
+          style={{ animation: 'fadeUp 0.15s ease forwards' }}>
+          <div className="px-3 py-1.5 text-[10px] font-head text-text-muted tracking-widest border-b border-white/8 mb-1">
+            SHARE WORLDCHASE
+          </div>
+
+          <button onClick={copyLink}
+            className="w-full text-left px-3 py-2 text-xs font-head text-white hover:bg-white/8 transition-colors flex items-center gap-2">
+            <span>🔗</span> Copy link
+          </button>
+
+          <button onClick={shareToMessenger}
+            className="w-full text-left px-3 py-2 text-xs font-head text-white hover:bg-white/8 transition-colors flex items-center gap-2">
+            <span className="text-[#1877f2] font-bold">f</span> Messenger
+          </button>
+
+          <button onClick={() => openUrl(`https://twitter.com/intent/tweet?text=${text}&url=${link}`)}
+            className="w-full text-left px-3 py-2 text-xs font-head text-white hover:bg-white/8 transition-colors flex items-center gap-2">
+            <span className="font-bold text-sm">𝕏</span> Post on X
+          </button>
+
+          <button onClick={() => openUrl(`https://wa.me/?text=${text}%20${link}`)}
+            className="w-full text-left px-3 py-2 text-xs font-head text-white hover:bg-white/8 transition-colors flex items-center gap-2">
+            <span>💬</span> WhatsApp
+          </button>
+
+          <button onClick={() => openUrl(`https://www.reddit.com/submit?url=${link}&title=${text}`)}
+            className="w-full text-left px-3 py-2 text-xs font-head text-white hover:bg-white/8 transition-colors flex items-center gap-2">
+            <span>🤖</span> Reddit
+          </button>
+
+          <button onClick={() => openUrl(`mailto:?subject=Play%20WorldChase&body=${text}%20${link}`)}
+            className="w-full text-left px-3 py-2 text-xs font-head text-white hover:bg-white/8 transition-colors flex items-center gap-2">
+            <span>✉️</span> Email
+          </button>
+
+          {isMobile && hasNativeShare && (
+            <button onClick={nativeShare}
+              className="w-full text-left px-3 py-2 text-xs font-head text-text-muted hover:bg-white/8 transition-colors flex items-center gap-2 border-t border-white/8 mt-1">
+              <span>📱</span> More apps…
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
