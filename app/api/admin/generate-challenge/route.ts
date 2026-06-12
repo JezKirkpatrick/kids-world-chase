@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic'
 const STREET_VIEW_ROUNDS = [1, 6, 11, 16]
 
 // Kid-friendly difficulty labels for display (DB still uses easy/medium/hard/extreme)
-export const KIDS_DIFFICULTY_LABELS: Record<string, string> = {
+const KIDS_DIFFICULTY_LABELS: Record<string, string> = {
   easy: 'Explorer',
   medium: 'Adventurer',
   hard: 'Navigator',
