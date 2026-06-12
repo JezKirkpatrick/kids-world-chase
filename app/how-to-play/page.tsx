@@ -5,36 +5,36 @@ import { KEYBOARD_SHORTCUTS } from '@/lib/keyboard-shortcuts'
 
 const STEPS = [
   {
-    n: '01', title: 'READ THE RIDDLE',
-    desc: 'Each round gives you a cryptic clue — no country name, no obvious hints. Just a carefully crafted description pointing to somewhere real on Earth.',
+    n: '01', title: 'READ THE CLUE',
+    desc: 'Each round gives you a fun riddle about a real place on Earth. No country name given — just exciting clues to help you figure it out! Read it carefully.',
   },
   {
     n: '02', title: 'OPEN GOOGLE MAPS',
-    desc: 'The full Google Maps is yours. Zoom anywhere, switch to Street View, go satellite. The answer is out there — you just have to find it.',
+    desc: 'The full Google Maps is yours to explore! Zoom anywhere, walk the streets in Street View, or look from satellite. The answer is out there!',
   },
   {
     n: '03', title: 'EXPLORE & THINK',
-    desc: 'Navigate the map region. Use geography knowledge, clues, and instinct. You can reveal up to 3 extra clues (1 token each) if you\'re stuck.',
+    desc: 'Use your geography knowledge, clues, and detective skills! If you\'re stuck, you can reveal up to 3 extra clues (1 token each) for extra help.',
   },
   {
     n: '04', title: 'SUBMIT YOUR ANSWER',
-    desc: 'Type the location name and hit Enter. Wrong guesses cost a small score penalty — think before you submit. You can try as many times as you need.',
+    desc: 'Type in the place name and press Enter. You can try as many times as you need — just think carefully before submitting!',
   },
   {
     n: '05', title: 'COLLECT TOKENS',
-    desc: 'While exploring, hidden token caches are scattered across the region. Activate your radar with [H] and navigate close enough to collect them.',
+    desc: 'Hidden treasure tokens are scattered across the map region. Press [H] to activate your radar and navigate close enough to collect them!',
   },
   {
-    n: '06', title: 'CLIMB THE LEADERBOARD',
-    desc: 'Score depends on difficulty, speed, clues used, and wrong answers. Race to the top — the global leaderboard resets every week.',
+    n: '06', title: 'LEARN & LEVEL UP',
+    desc: 'After each round, discover an amazing fact about the place you found. Race up the leaderboard before the week ends and become a champion!',
   },
 ]
 
 const SCORING = [
-  { diff: 'Easy',    base: '500',   clue: '−20% each', wrong: '−5% each', speed: '+10% under 10min' },
-  { diff: 'Medium',  base: '1,000', clue: '−20% each', wrong: '−5% each', speed: '+10% under 10min' },
-  { diff: 'Hard',    base: '2,500', clue: '−20% each', wrong: '−5% each', speed: '+10% under 10min' },
-  { diff: 'Extreme', base: '5,000', clue: '−20% each', wrong: '−5% each', speed: '+10% under 10min' },
+  { diff: 'Explorer',    base: '500',   clue: '−20% each', wrong: '−5% each', speed: '+10% under 10min' },
+  { diff: 'Adventurer',  base: '1,000', clue: '−20% each', wrong: '−5% each', speed: '+10% under 10min' },
+  { diff: 'Navigator',   base: '2,500', clue: '−20% each', wrong: '−5% each', speed: '+10% under 10min' },
+  { diff: 'Champion',    base: '5,000', clue: '−20% each', wrong: '−5% each', speed: '+10% under 10min' },
 ]
 
 const EARN = [
@@ -56,22 +56,22 @@ const SPEND = [
 ]
 
 const TIPS = [
-  { emoji: '🎯', text: 'Clue 1 is always free — read it carefully before touching the map.' },
-  { emoji: '⚡', text: 'Solve within 10 minutes for a 10% speed bonus on top of your base score.' },
-  { emoji: '🗺️', text: 'Street View is your best friend. Hop in and look for signs, landscape, or architecture.' },
-  { emoji: '🪙', text: 'Don\'t spend tokens recklessly — save them for the hard and extreme rounds where they matter most.' },
-  { emoji: '📍', text: 'Drop map pins while you explore. You get 5 per round — use them as waypoints.' },
-  { emoji: '📡', text: 'Always sweep the map with [H] radar before submitting — hidden tokens are free score.' },
+  { emoji: '🎯', text: 'Clue 1 is always free — read it carefully and think about it before opening the map.' },
+  { emoji: '⚡', text: 'Solve within 10 minutes for a speed bonus! The faster you find it, the more points you earn.' },
+  { emoji: '🗺️', text: 'Street View is your superpower! Walk the streets and look for signs, buildings, and landscapes.' },
+  { emoji: '🪙', text: 'Save your tokens for the harder Navigator and Champion rounds where you might really need them.' },
+  { emoji: '📍', text: 'Drop map pins while you explore. You get 5 per round — use them to remember places you\'ve checked.' },
+  { emoji: '📡', text: 'Always use the [H] radar before you finish a round — hidden tokens mean free extra points!' },
   { emoji: '🧠', text: 'Play the Daily Geo Quiz every day — even 50 pts per quiz adds up fast on the weekly leaderboard.' },
-  { emoji: '⚔️', text: 'Challenge friends to a VS Duel — win to earn bonus tokens and bragging rights.' },
+  { emoji: '🤝', text: 'Challenge a friend to a VS Duel — whoever finds the location first wins bonus tokens!' },
 ]
 
 const GAME_MODES = [
   {
     icon: '🌍',
-    title: 'WEEKLY HUNT',
+    title: 'WEEKLY ADVENTURE',
     color: 'text-gold border-gold/30',
-    desc: '20 cryptic riddles, one per round. Race to crack every location before the week ends. Your total score goes on the global leaderboard.',
+    desc: '20 fun riddles, one per round. Discover amazing places around the world before the week ends. Your total score goes on the global leaderboard!',
     href: '/play',
     cta: 'PLAY NOW',
   },
@@ -79,23 +79,23 @@ const GAME_MODES = [
     icon: '🧠',
     title: 'DAILY GEO QUIZ',
     color: 'text-electric border-electric/30',
-    desc: '20 multiple-choice geography questions. 20 seconds per question — answer faster for more points. New quiz every day at midnight UTC.',
+    desc: '20 multiple-choice geography questions every day. Answer as fast as you can for bonus points. A great way to learn geography facts!',
     href: '/quiz',
     cta: 'TODAY\'S QUIZ',
   },
   {
-    icon: '⚔️',
-    title: 'VS DUEL',
+    icon: '🤝',
+    title: 'VS CHALLENGE',
     color: 'text-gold border-gold/30',
-    desc: 'Challenge another player to a head-to-head location guessing battle. Both hunters get the same riddle — first to crack it wins.',
+    desc: 'Challenge a friend to a geography battle! You both get the same riddle — whoever finds the location first wins. Perfect for competing with classmates!',
     href: '/vs',
-    cta: 'DUEL NOW',
+    cta: 'CHALLENGE NOW',
   },
   {
     icon: '📅',
     title: 'DAILY CHALLENGE',
     color: 'text-text-muted border-white/15',
-    desc: 'A fresh standalone location challenge every day. No weekly pressure — just a quick daily hunt to keep your skills sharp.',
+    desc: 'A fresh standalone location challenge every day. No weekly pressure — just a quick daily adventure to practise your geography skills.',
     href: '/daily',
     cta: 'PLAY DAILY',
   },
@@ -116,7 +116,7 @@ export default async function HowToPlayPage() {
           <div className="text-xs text-gold font-head tracking-[0.3em] mb-2">FIELD MANUAL</div>
           <h1 className="font-head font-bold text-3xl sm:text-4xl text-white mb-3">How to Play</h1>
           <p className="text-text-muted font-head leading-relaxed text-sm sm:text-base">
-            World Chase is a weekly competitive geography game. Every week, 20 rounds go live — each one is a cryptic riddle describing a real location somewhere on Earth. Solve them all before the week ends and climb to the top of the global leaderboard. Plus play the daily quiz, duel friends, and customise your hunter.
+            Kids World Chase is a weekly geography adventure for ages 8–13. Every week, 20 fun rounds go live — each one is an exciting riddle describing a real place somewhere on Earth. Solve them all, learn amazing facts, and climb to the top of the global leaderboard. Plus play the daily quiz, challenge friends, and customise your explorer!
           </p>
         </div>
 
@@ -289,7 +289,7 @@ export default async function HowToPlayPage() {
             </table>
           </div>
           <p className="text-text-muted font-head text-sm mt-3">
-            Maximum possible score for a perfect week:{' '}
+            Maximum possible score for a perfect week (all 20 rounds!):{' '}
             <span className="text-gold font-bold">47,500 pts</span>
           </p>
         </section>

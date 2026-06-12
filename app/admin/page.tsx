@@ -32,7 +32,7 @@ export default async function AdminPage() {
   return (
     <div className="min-h-screen bg-navy text-text">
       <nav className="h-14 bg-navy-light border-b border-white/8 flex items-center justify-between px-6">
-        <span className="font-head font-bold text-gold tracking-widest">WORLD CHASE — ADMIN</span>
+        <span className="font-head font-bold text-gold tracking-widest">KIDS WORLD CHASE — ADMIN</span>
         <Link href="/dashboard" className="text-sm font-head text-text-muted hover:text-white">← BACK</Link>
       </nav>
 
@@ -50,7 +50,7 @@ export default async function AdminPage() {
 
         <div className="grid grid-cols-2 gap-4">
           {[
-            { href: '/admin/events', label: 'MANAGE EVENTS', desc: 'Create and edit weekly events' },
+            { href: '/admin/events', label: 'MANAGE EVENTS', desc: 'Create and edit weekly kid-friendly events' },
             { href: '/admin/challenges', label: 'MANAGE CHALLENGES', desc: 'Edit rounds, generate with AI' },
             { href: '/admin/players', label: 'MANAGE PLAYERS', desc: 'Search, ban, grant tokens' },
             { href: '/admin/geo-quiz', label: 'GEO QUIZ', desc: 'Schedule, generate questions, run live quiz' },

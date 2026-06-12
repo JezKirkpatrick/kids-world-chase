@@ -6,33 +6,33 @@ import { ToastProvider } from '@/components/ui/Toast'
 import OnlineUsersProvider from '@/components/ui/OnlineUsersProvider'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.worldchase.net'),
-  title: 'World Chase — Hunt the World',
-  description: "The world's most challenging weekly geography game. Solve cryptic riddles. Explore Google Maps. Race to the global leaderboard.",
-  applicationName: 'World Chase',
+  metadataBase: new URL('https://www.kidsworldchase.com'),
+  title: 'Kids World Chase — Explore the World!',
+  description: "The exciting weekly geography adventure for kids aged 8–13. Solve fun riddles, explore Google Maps, learn amazing facts, and race to the global leaderboard!",
+  applicationName: 'Kids World Chase',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'World Chase',
+    title: 'Kids World Chase',
   },
   formatDetection: { telephone: false },
   openGraph: {
-    title: 'World Chase — Hunt the World',
-    description: 'Hunt the World. Claim the Crown. Weekly competitive geography battle.',
+    title: 'Kids World Chase — Explore the World!',
+    description: 'Explore the World. Learn Geography. Become a Champion! Weekly geography adventure for kids.',
     type: 'website',
-    url: 'https://www.worldchase.net',
-    siteName: 'World Chase',
+    url: 'https://www.kidsworldchase.com',
+    siteName: 'Kids World Chase',
     images: [{
       url: '/opengraph-image',
       width: 1200,
       height: 630,
-      alt: 'World Chase — Hunt the World',
+      alt: 'Kids World Chase — Explore the World!',
     }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'World Chase — Hunt the World',
-    description: 'Hunt the World. Claim the Crown. Weekly competitive geography battle.',
+    title: 'Kids World Chase — Explore the World!',
+    description: 'Explore the World. Learn Geography. Become a Champion! Weekly geography adventure for kids.',
     images: ['/opengraph-image'],
   },
 }

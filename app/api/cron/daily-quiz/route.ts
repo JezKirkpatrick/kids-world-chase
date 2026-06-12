@@ -72,15 +72,15 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    // Rotating daily theme — cycles through 7 distinct focus areas
+    // Rotating daily theme — cycles through 7 kid-friendly focus areas
     const DAILY_THEMES = [
-      'Focus heavily on African and Middle Eastern geography — countries, rivers, capitals, deserts.',
-      'Focus heavily on Asian geography — South Asia, Southeast Asia, East Asia, Central Asia.',
-      'Focus heavily on the Americas — North, Central, South America, Caribbean islands.',
-      'Focus heavily on European geography — including lesser-known countries, rivers, regions.',
-      'Focus heavily on Oceania, Pacific islands, polar regions, and extreme geography.',
-      'Focus heavily on physical geography worldwide — mountain ranges, rivers, lakes, oceans, climate zones.',
-      'Mix of geography world records, historical place names, enclaves, disputed territories, and flags.',
+      'Focus on African and Middle Eastern geography — famous countries, rivers, pyramids, capital cities, and amazing animals.',
+      'Focus on Asian geography — famous countries, Great Wall, Mount Everest, capital cities, rivers, and cool facts.',
+      'Focus on the Americas — North and South America, famous landmarks, rivers, rainforests, and capital cities.',
+      'Focus on European geography — famous countries, capital cities, rivers like the Thames and Rhine, landmarks kids know.',
+      'Focus on Oceania, Pacific islands, Australia, Antarctica, and interesting facts about oceans and islands.',
+      'Focus on physical geography — famous mountains, rivers, lakes, oceans, deserts, and amazing natural wonders.',
+      'Mix of fun geography facts — world records (biggest, smallest, tallest), amazing animals and their habitats, flags, and cool geography surprises.',
     ]
     const dayOfWeek = new Date().getDay() // 0-6
     const todayTheme = DAILY_THEMES[dayOfWeek]
@@ -95,28 +95,27 @@ export async function GET(req: NextRequest) {
       max_tokens: 4000,
       messages: [{
         role: 'user',
-        content: `Generate exactly 20 challenging geography trivia questions for today's daily quiz (${today}). Players are geography enthusiasts, so questions must be genuinely difficult.
+        content: `Generate exactly 20 fun and educational geography trivia questions for today's daily quiz (${today}). This is for kids aged 8–13, so questions should be engaging, age-appropriate, and educational — not too easy, but not too hard either.
 
 TODAY'S THEME: ${todayTheme}
 
 Mix these categories across the 20 questions:
-- Obscure world capitals and country seats of government
-- Physical geography: rivers, lakes, mountains, deserts, oceans
-- Country borders, territories, and enclaves
-- Island nations and archipelagos
-- Geography records (deepest, highest, longest, largest, smallest)
-- Historical and renamed places
-- Time zones and hemispheres
-- Flags and emblems (describe colors/patterns — no images)
-- Population and demographic geography
-- Extreme and unusual geography
+- World capitals that appear in school geography curricula
+- Famous rivers, mountains, deserts, and oceans
+- Amazing animals and their habitats (e.g. where do penguins/polar bears live?)
+- Fun geography records (biggest country, longest river, highest mountain)
+- Famous landmarks kids would recognise from books or TV
+- Island nations and interesting island facts
+- Continents and their countries
+- Fun facts about countries (what language they speak, what they're famous for)
 
 Rules:
 - Exactly 4 answer options per question (just the text — no A/B/C/D labels)
 - One unambiguously correct answer
-- Wrong options must be plausible but clearly incorrect to an expert
+- Wrong options must be plausible but clearly wrong to someone who knows the answer
 - No trick questions — straightforward factual geography
-- Avoid very easy questions (Eiffel Tower in Paris, etc.)
+- Language must be clear and suitable for ages 8–13
+- Questions should feel exciting and make kids want to learn more
 - CRITICAL: The correct answer must be placed at a DIFFERENT random position in each question. Vary "correct" across 0, 1, 2, and 3 — do NOT use 0 for every question. Spread answers so positions 0, 1, 2, and 3 each appear roughly 5 times.
 - Every question must be completely different in topic and wording from all others in this set${avoidBlock}
 
@@ -124,10 +123,10 @@ Respond with ONLY a valid JSON array — no markdown, no commentary:
 [
   {
     "id": 0,
-    "question": "Which country has the most UNESCO World Heritage Sites?",
-    "options": ["France", "Spain", "China", "Italy"],
-    "correct": 2,
-    "category": "World Records"
+    "question": "Which is the longest river in the world?",
+    "options": ["Amazon", "Nile", "Mississippi", "Yangtze"],
+    "correct": 1,
+    "category": "Rivers"
   }
 ]
 Generate all 20 questions. Start from id 0.`,

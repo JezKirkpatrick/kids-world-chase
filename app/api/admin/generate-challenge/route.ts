@@ -9,39 +9,51 @@ export const dynamic = 'force-dynamic'
 
 const STREET_VIEW_ROUNDS = [1, 6, 11, 16]
 
+// Kid-friendly difficulty labels for display (DB still uses easy/medium/hard/extreme)
+export const KIDS_DIFFICULTY_LABELS: Record<string, string> = {
+  easy: 'Explorer',
+  medium: 'Adventurer',
+  hard: 'Navigator',
+  extreme: 'Champion',
+}
+
 function buildStreetViewPrompt(roundNumber: number, difficulty: string, existingLocations: string[], eventTheme?: EventTheme): string {
   const pointsMap: Record<string, number> = { easy: 500, medium: 1000, hard: 2500, extreme: 5000 }
   const narrativeStyle = NARRATIVE_STYLES[(roundNumber - 1) % NARRATIVE_STYLES.length]
+  const diffLabel = KIDS_DIFFICULTY_LABELS[difficulty] ?? difficulty
   const themeSection = eventTheme
-    ? `\nEVENT THEME: "${eventTheme.label}" — ${eventTheme.description}
-REQUIRED REGION FOCUS: ${eventTheme.regionFocus}
+    ? `\nTHEME: "${eventTheme.label}" — ${eventTheme.description}
+FOCUS ON: ${eventTheme.regionFocus}
 AVOID: ${eventTheme.avoidRegions}\n`
     : ''
 
-  return `You are the game master for "World Chase" — a competitive geography game.
+  return `You are the friendly game master for "Kids World Chase" — an educational geography game designed for children aged 8–13.
 ${themeSection}
-Generate ONE Street View Observation challenge for Round ${roundNumber}, difficulty: ${difficulty.toUpperCase()}.
+Generate ONE Street View Observation challenge for Round ${roundNumber} (${diffLabel} level).
 
-Pick a REAL, visually interesting street, square, market, or landmark that has OFFICIAL Google Street View car coverage (blue lines on Google Maps) — NOT user-contributed 360° photos. The location must have navigable street-level imagery with road arrows so players can walk along the street.
-The observation question must be answerable by carefully looking at the Street View imagery.
-Questions should be specific and have a clear, unambiguous answer.
+Pick a REAL, famous, visually interesting street or landmark that has OFFICIAL Google Street View car coverage (blue lines on Google Maps). The location must be well-known enough that it appears in children's geography books or school curricula. NOT user-contributed photos — must have navigable road arrows.
 
-DIFFICULTY GUIDE for observation questions:
-- EASY: Count something large and obvious (flags, vehicles, market stalls) on a famous street in the theme region. The answer must be a simple small number (1–9) anyone can count at a glance.
-- MEDIUM: Identify something specific (color, word, symbol) on a recognizable but less-famous location in the theme region.
-- HARD: Count or identify something subtle on an obscure street or small town.
-- EXTREME: Spot a tiny or hidden detail in a very remote or unusual location.
+The observation question must be answerable by looking carefully at the Street View imagery. Keep it fun and age-appropriate.
 
-CLUE WRITING RULES — CRITICAL:
-Players are dropped into Google Street View with NO idea where to look or which way to navigate. Every clue MUST contain two parts:
-1. A NAVIGATION DIRECTION — tell the player which way to face or walk (e.g. "face the building directly ahead", "walk forward along the street until you reach the square", "turn to face the cliff above you", "look up to your left").
-2. An OBSERVATION HINT — what to look for once they're positioned correctly.
-Clues progress from vague (1) to near-explicit (4). Clue 4 must make the answer findable without guessing.
+LEVEL GUIDE for observation questions:
+- EXPLORER (easy): Count something large and obvious (flags, statues, vehicles) at a world-famous location. Answer must be a simple number 1–9 or an obvious visible object.
+- ADVENTURER (medium): Identify something specific (colour of a building, a symbol, an animal) at a well-known landmark.
+- NAVIGATOR (hard): Spot something that requires careful looking at a recognisable but less-famous location.
+- CHAMPION (extreme): Find a specific detail at a famous location that takes real concentration to spot.
+
+CLUE WRITING RULES:
+Players are dropped into Street View with no navigation help. Every clue MUST contain:
+1. A DIRECTION — tell them which way to look or walk (e.g. "face the big building ahead", "walk forward to the fountain", "look up to the sky").
+2. AN OBSERVATION HINT — what to look for.
+Clues go from vague (clue 1) to very clear (clue 4). Clue 4 must make the answer findable without guessing.
+Keep language simple, fun, and encouraging — like a helpful friend guiding them.
 
 NARRATIVE STYLE FOR THIS ROUND: ${narrativeStyle}
-Write the riddle_text in this exact style — atmospheric and genre-appropriate.
+Write the riddle_text in this style but keep it age-appropriate and exciting for kids. No scary, dark, or violent language.
 
 DO NOT use any of these already-used locations: ${existingLocations.join(', ')}
+
+The fun_fact MUST be an interesting educational fact about this place that kids would love to share with their friends or parents.
 
 Respond with ONLY valid JSON — no markdown:
 {
@@ -58,49 +70,50 @@ Respond with ONLY valid JSON — no markdown:
   "street_view_only": true,
   "street_view_question": "The exact observation question players must answer",
   "points_value": ${pointsMap[difficulty] ?? 500},
-  "riddle_text": "A one-sentence intro setting the scene in the specified narrative style. Do not give away the answer.",
+  "riddle_text": "A one-sentence intro setting the scene in the specified narrative style. Kid-friendly and exciting. Do not give away the answer.",
   "clues": [
-    {"order":1,"text":"[Direction: vague] + [Observation: vague hint]"},
-    {"order":2,"text":"[Direction: slightly more specific] + [Observation: more specific hint]"},
-    {"order":3,"text":"[Direction: clear instruction, e.g. 'walk forward and look above the archway'] + [Observation: clear hint]"},
-    {"order":4,"text":"[Direction: explicit, e.g. 'face the main facade and look at the upper windows'] + [Observation: nearly explicit answer]"}
+    {"order":1,"text":"[Direction: simple] + [Observation: broad hint]"},
+    {"order":2,"text":"[Direction: a bit more specific] + [Observation: more helpful hint]"},
+    {"order":3,"text":"[Direction: clear, e.g. 'walk forward and look at the big arch'] + [Observation: clear hint]"},
+    {"order":4,"text":"[Direction: very clear] + [Observation: nearly gives it away]"}
   ],
   "answer_keywords": ["exact answer", "alternate phrasing"],
-  "fun_fact": "One interesting fact about this location."
+  "fun_fact": "One fascinating, age-appropriate educational fact about this location that kids will love to know."
 }`
 }
 
 function buildPrompt(roundNumber: number, difficulty: string, existingLocations: string[], eventTheme?: EventTheme): string {
   const pointsMap: Record<string, number> = { easy: 500, medium: 1000, hard: 2500, extreme: 5000 }
   const narrativeStyle = NARRATIVE_STYLES[(roundNumber - 1) % NARRATIVE_STYLES.length]
+  const diffLabel = KIDS_DIFFICULTY_LABELS[difficulty] ?? difficulty
   const themeSection = eventTheme
-    ? `\nEVENT THEME: "${eventTheme.label}" — ${eventTheme.description}
-REQUIRED REGION FOCUS: ${eventTheme.regionFocus}
+    ? `\nTHEME: "${eventTheme.label}" — ${eventTheme.description}
+FOCUS ON: ${eventTheme.regionFocus}
 AVOID: ${eventTheme.avoidRegions}\n`
     : ''
 
-  return `You are the game master for "World Chase" — a brutal weekly geography competition where players pay real money for extra clues and race for a global leaderboard.
+  return `You are the friendly game master for "Kids World Chase" — an educational geography adventure game for children aged 8–13.
 ${themeSection}
-Generate ONE unique, extraordinary challenge for Round ${roundNumber}, difficulty: ${difficulty.toUpperCase()}.
+Generate ONE exciting, educational challenge for Round ${roundNumber} (${diffLabel} level).
 
-GEOGRAPHIC DIVERSITY RULE: This challenge must be in a DIFFERENT country than every location in the existing list below. Spread across different sub-regions of the theme's focus area.
+GEOGRAPHIC DIVERSITY RULE: Pick a location in a DIFFERENT country than any place in the existing list below.
 
-DIFFICULTY GUIDE:
-- EASY: The most iconic, universally-recognised landmarks in the theme region — places every person would know.
-- MEDIUM: Remarkable but less globally-famous destinations within the theme region.
-- HARD: Genuinely obscure — remote towns, unusual geological features, niche cultural sites within the theme region.
-- EXTREME: The most forgotten, bizarre, inhospitable, or absurdly remote locations within the theme region.
+LEVEL GUIDE:
+- EXPLORER (easy): The most famous, iconic landmarks in the world — the Eiffel Tower, Great Wall, Taj Mahal, etc. Every child should know or be able to guess these with a couple of clues. These should feel exciting and rewarding.
+- ADVENTURER (medium): Well-known but slightly less obvious places — major capital cities, famous natural wonders, important historical sites that appear in school geography.
+- NAVIGATOR (hard): Interesting places that require some geography knowledge — major rivers, mountain ranges, famous national parks, remarkable cities kids might not immediately recognise.
+- CHAMPION (extreme): Challenging but still educational — places that appear in geography books and are genuinely fascinating, but require real knowledge or good clue-reading to find.
 
 NARRATIVE STYLE FOR THIS ROUND: ${narrativeStyle}
-Write the riddle_text in this exact style — make it atmospheric, literary, and fully genre-appropriate. This is the most important creative element.
+Write the riddle_text in this exact style — make it fun, exciting, and age-appropriate. NEVER use scary, dark, violent, or disturbing language. The tone must always be encouraging and adventurous.
 
 WRITING RULES:
-- Riddle text must match the narrative style above perfectly. Do not default to generic poetic writing.
-- NEVER name the location, country, or any direct identifier in the riddle.
-- Clues must progress from HARDEST (1) to EASIEST (4).
-- For EASY difficulty: clue 3 must strongly hint at the country, and clue 4 must nearly name the location directly.
-- Map start distance from answer: easy=2–5km, medium=10–30km, hard=50–150km, extreme=200–500km
-- Hard and extreme map starts must begin in a completely different country or region.
+- Language must be suitable for ages 8–13. Simple words, exciting tone.
+- NEVER name the location, country, or any direct identifier in the riddle or clues (until clue 4 for easy).
+- Clues go from hardest (1) to easiest (4).
+- For EXPLORER: clue 3 should hint at the country, clue 4 should nearly name the place.
+- Map start distance from answer: explorer=1–3km, adventurer=5–20km, navigator=30–100km, champion=100–300km.
+- Include an interesting educational fact in fun_fact that a child would want to tell their parents.
 - DO NOT use any of these already-used locations: ${existingLocations.join(', ')}
 
 Respond with ONLY valid JSON — no markdown:
@@ -118,15 +131,15 @@ Respond with ONLY valid JSON — no markdown:
   "street_view_only": false,
   "street_view_question": null,
   "points_value": ${pointsMap[difficulty] ?? 500},
-  "riddle_text": "3-5 sentences written in the specified narrative style",
+  "riddle_text": "2–4 sentences written in the specified narrative style — fun and exciting for kids aged 8–13",
   "clues": [
-    {"order":1,"text":"hardest clue"},
-    {"order":2,"text":"medium clue"},
-    {"order":3,"text":"easier clue"},
-    {"order":4,"text":"easiest clue — almost explicit"}
+    {"order":1,"text":"broadest clue — a general continent or region"},
+    {"order":2,"text":"more helpful clue — narrows it down significantly"},
+    {"order":3,"text":"clear clue — hints at the country or famous feature"},
+    {"order":4,"text":"easiest clue — nearly names it, a child who pays attention should get it"}
   ],
-  "answer_keywords": ["primary","alternate spelling","landmark name"],
-  "fun_fact": "One astonishing fact about this location."
+  "answer_keywords": ["primary name","alternate spelling","local name"],
+  "fun_fact": "One fascinating educational fact about this place that a child would love to share — keep it fun, surprising, and age-appropriate."
 }`
 }
 
@@ -167,7 +180,6 @@ export async function POST(req: NextRequest) {
     const cleaned = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim()
     const challengeData = JSON.parse(cleaned)
 
-    // Validate clues — reject if the AI returned duplicates or no distinct texts
     if (Array.isArray(challengeData.clues)) {
       const texts = challengeData.clues.map((c: any) => (c.text ?? '').trim().toLowerCase())
       const unique = new Set(texts)
@@ -177,7 +189,6 @@ export async function POST(req: NextRequest) {
       if (challengeData.clues.length < 2) {
         return NextResponse.json({ error: 'AI returned too few clues — regenerate this challenge.' }, { status: 422 })
       }
-      // Normalise order values to 1-indexed sequential integers regardless of AI output
       challengeData.clues = challengeData.clues.map((c: any, idx: number) => ({ ...c, order: idx + 1 }))
     }
 
@@ -186,7 +197,7 @@ export async function POST(req: NextRequest) {
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     )
     const { data, error } = await service.from('challenges').insert({
-      ...challengeData, event_id: eventId, time_limit_seconds: 1800,
+      ...challengeData, event_id: eventId, time_limit_seconds: 2400,
     }).select().single()
 
     if (error) throw error
