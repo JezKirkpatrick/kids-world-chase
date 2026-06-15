@@ -1,7 +1,8 @@
 export const dynamic = 'force-dynamic'
 export const metadata = {
-  title: 'Daily Challenge — World Chase',
-  description: 'A free daily geography puzzle. Crack the location, earn tokens, and practice for the live hunt.',
+  title: 'Daily Geography Challenge',
+  description: "A free daily geography puzzle for kids — no login required! Crack today's mystery location, earn tokens, and practise for the weekly Kids World Chase adventure.",
+  keywords: ['daily geography quiz for kids', 'free kids geography puzzle', 'geography challenge children', 'daily map quiz kids'],
 }
 
 import { redirect } from 'next/navigation'

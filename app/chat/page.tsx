@@ -3,7 +3,7 @@ import { getUser } from '@/lib/auth'
 import GlobalNav from '@/components/ui/GlobalNav'
 import ChatClient from './ChatClient'
 
-export const metadata = { title: 'Hunter Chat — World Chase' }
+export const metadata = { title: 'Explorer Chat' }
 
 export default async function ChatPage() {
   const user = await getUser()

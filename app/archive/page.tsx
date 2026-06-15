@@ -1,7 +1,8 @@
 export const dynamic = 'force-dynamic'
 export const metadata = {
-  title: 'Hunt Archive — World Chase',
-  description: 'Replay past World Chase hunts in practice mode. Earn tokens without affecting live standings.',
+  title: 'Adventure Archive',
+  description: 'Replay every past Kids World Chase adventure in practice mode. Explore amazing locations from around the world, earn tokens, and sharpen your geography skills.',
+  keywords: ['kids geography archive', 'past geography quizzes for kids', 'practice geography game children'],
 }
 
 import { redirect } from 'next/navigation'

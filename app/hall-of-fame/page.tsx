@@ -1,5 +1,10 @@
 export const dynamic = 'force-dynamic'
 
+export const metadata = {
+  title: 'Hall of Fame',
+  description: "Kids World Chase Hall of Fame — celebrating the greatest young geography explorers. Monthly champions and all-time legends aged 8–13.",
+}
+
 import { createClient } from '@/lib/supabase-server'
 import GlobalNav from '@/components/ui/GlobalNav'
 import HallOfFameClient from '@/components/hof/HallOfFameClient'

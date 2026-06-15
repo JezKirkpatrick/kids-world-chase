@@ -49,14 +49,23 @@ export async function POST(req: NextRequest) {
 
     const [challengeRes, progressRes] = await Promise.all([
       supabase.from('challenges').select('*').eq('id', challengeId).single(),
-      supabase.from('player_progress').select('*').eq('challenge_id', challengeId).eq('user_id', userId).single(),
+      supabase.from('player_progress').select('*').eq('challenge_id', challengeId).eq('user_id', userId).maybeSingle(),
     ])
 
-    if (challengeRes.error || !challengeRes.data) return NextResponse.json({ error: 'Challenge not found' }, { status: 404 })
-    if (progressRes.error || !progressRes.data) return NextResponse.json({ error: 'Progress not found' }, { status: 404 })
+    if (challengeRes.error || !challengeRes.data) return NextResponse.json({ error: 'Challenge not found', cid: challengeId, detail: challengeRes.error?.message }, { status: 404 })
 
     const challenge = challengeRes.data
-    const progress  = progressRes.data
+
+    // Auto-create progress row if missing (race condition with useGameState on first load)
+    let progress = progressRes.data
+    if (!progress) {
+      const { data: created, error: upsertErr } = await supabase.from('player_progress').upsert({
+        user_id: userId, event_id: challenge.event_id, challenge_id: challengeId,
+        status: 'active', started_at: new Date().toISOString(),
+      }, { onConflict: 'user_id,challenge_id' }).select().single()
+      if (!created) return NextResponse.json({ error: 'Progress not found', uid: userId, cid: challengeId, detail: upsertErr?.message }, { status: 404 })
+      progress = created
+    }
 
     const maxAttempts = challenge.difficulty === 'easy' ? 10 : 5
     if (progress.attempts >= maxAttempts) return NextResponse.json({ error: 'Max attempts reached' }, { status: 400 })
@@ -144,7 +153,7 @@ export async function POST(req: NextRequest) {
         await Promise.all([progressUpdate, leaderboardUpsert])
       }
 
-      const { data: profileData } = await supabase.from('profiles').select('tokens').eq('id', userId).single()
+      const { data: profileData } = await supabase.from('profiles').select('tokens').eq('id', userId).maybeSingle()
 
       // Notify players who just got overtaken (fire-and-forget, don't block response)
       try {
@@ -153,7 +162,7 @@ export async function POST(req: NextRequest) {
           .select('rank')
           .eq('user_id', userId)
           .eq('event_id', challenge.event_id)
-          .single()
+          .maybeSingle()
         if (newRankData?.rank) {
           // Find players we just passed (rank was between their old rank and new rank)
           const { data: overtaken } = await supabase
@@ -164,7 +173,7 @@ export async function POST(req: NextRequest) {
             .lt('rank', newRankData.rank + 3)
             .neq('user_id', userId)
           if (overtaken?.length) {
-            const { data: myProfile } = await supabase.from('profiles').select('username, display_name').eq('id', userId).single()
+            const { data: myProfile } = await supabase.from('profiles').select('username, display_name').eq('id', userId).maybeSingle()
             const myName = myProfile?.display_name || myProfile?.username || 'A hunter'
             await Promise.allSettled(
               overtaken.map(entry =>

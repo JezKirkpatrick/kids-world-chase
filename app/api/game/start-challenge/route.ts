@@ -25,10 +25,10 @@ export async function POST(req: NextRequest) {
 
     if (existing.data) return NextResponse.json({ success: true })
 
-    await supabase.from('player_progress').insert({
+    await supabase.from('player_progress').upsert({
       user_id: user.id, event_id: eventId, challenge_id: challengeId,
       status: 'active', started_at: new Date().toISOString(),
-    })
+    }, { onConflict: 'user_id,challenge_id', ignoreDuplicates: true })
 
     await supabase.from('leaderboard').upsert({
       user_id: user.id, event_id: eventId, total_score: 0,

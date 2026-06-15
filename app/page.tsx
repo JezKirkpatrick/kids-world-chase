@@ -1,4 +1,16 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Kids World Chase — Explore the World!',
+  description: "The exciting weekly geography adventure for kids aged 8–13. Solve fun riddles, explore Google Maps in Street View, discover amazing places, and race to the global leaderboard. Free to play!",
+  keywords: ['geography game for kids', 'kids geography quiz', 'educational geography game', 'fun geography for children', 'kids world map game', 'geography adventure for kids'],
+  openGraph: {
+    title: 'Kids World Chase — Explore the World!',
+    description: 'Weekly geography adventure for kids aged 8–13. Solve riddles, explore the globe, and become a Champion!',
+    url: 'https://www.kidsworldchase.net',
+  },
+}
 
 const STATS = [{ label: '🌍 Players in 47 countries' }, { label: '🏆 12,400+ young explorers' }, { label: '🗺️ 240 amazing places discovered' }]
 
