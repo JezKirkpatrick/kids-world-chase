@@ -48,7 +48,7 @@ export default async function GlobalNav() {
     <nav className="h-14 bg-navy-light/95 backdrop-blur border-b border-white/8 flex items-center justify-between px-4 sm:px-6 z-30 sticky top-0">
       {/* Left — logo */}
       <Link href="/dashboard" className="font-head font-bold text-gold tracking-widest text-base hover:text-gold-dim transition-colors whitespace-nowrap">
-        ≡ KIDS WORLD CHASE
+        ≡ KWC
       </Link>
 
       {/* Centre — links */}
@@ -71,7 +71,8 @@ export default async function GlobalNav() {
         </Link>
         <Link href="/archive"     className="hidden lg:inline text-xs font-head font-bold tracking-widest text-text-muted hover:text-gold transition-colors whitespace-nowrap">ARCHIVE</Link>
         <Link href="/hall-of-fame" className="hidden lg:inline text-xs font-head font-bold tracking-widest text-text-muted hover:text-gold transition-colors whitespace-nowrap">HALL OF FAME</Link>
-        <a href="https://worldchase.net" target="_blank" rel="noopener noreferrer" className="hidden xl:inline text-xs font-head font-bold tracking-widest text-green-400 hover:text-white border border-green-400/40 px-2 py-0.5 rounded transition-colors whitespace-nowrap">WORLD CHASE ↗</a>
+        <Link href="/how-to-play" className="hidden xl:inline text-xs font-head font-bold tracking-widest text-text-muted hover:text-white transition-colors whitespace-nowrap">HOW TO PLAY</Link>
+        <a href="https://worldchase.net" target="_blank" rel="noopener noreferrer" className="hidden xl:inline text-xs font-head font-bold tracking-widest text-green-400 hover:text-white border border-green-400/40 px-2 py-0.5 rounded transition-colors whitespace-nowrap">WC ↗</a>
         {profile?.is_admin && (
           <Link href="/admin" className="text-xs font-head font-bold tracking-widest text-danger hover:text-danger/70 transition-colors whitespace-nowrap">ADMIN</Link>
         )}
@@ -96,9 +97,6 @@ export default async function GlobalNav() {
           <Avatar emoji={avatar} border={border} size="sm" />
         </Link>
         <div className="hidden sm:flex items-center gap-2">
-          <Link href="/how-to-play" className="text-xs font-head font-bold tracking-widest text-text-muted hover:text-white transition-colors px-2 py-1">
-            HOW TO PLAY
-          </Link>
           <Link href="/support" className="text-xs font-head font-bold tracking-widest text-text-muted hover:text-electric transition-colors px-2 py-1">
             SUPPORT
           </Link>
