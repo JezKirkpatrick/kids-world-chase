@@ -46,13 +46,13 @@ export default function LandingPage() {
       <section className="pt-32 pb-24 px-6 text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-30" />
         <div className="relative max-w-3xl mx-auto">
-          <div className="text-xs font-head font-bold tracking-[0.4em] text-gold mb-4">THE WEEKLY GEOGRAPHY ADVENTURE</div>
+          <div className="text-xs font-head font-bold tracking-[0.4em] text-gold mb-4">FREE GEOGRAPHY GAME FOR KIDS</div>
           <h1 className="font-head font-bold text-4xl sm:text-5xl md:text-7xl text-white mb-6 leading-tight">
-            Explore the World.<br/>
-            <span className="text-gold">Become a Champion!</span>
+            The Geography Game<br/>
+            <span className="text-gold">Kids Actually Love!</span>
           </h1>
           <p className="text-text-muted font-head text-base sm:text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
-            Twenty exciting riddles. Twenty amazing places to discover. Learn geography, explore Google Maps, and race friends to the top of the global leaderboard. New adventure every week!
+            The fun online geography game for children aged 8–13. Solve exciting riddles about real places, explore the world in Google Maps, collect hidden tokens, and race to the top of the global leaderboard. New geography adventure every week!
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
             <Link href="/auth/signup" className="px-8 sm:px-10 py-4 bg-gold text-navy font-head font-bold text-base sm:text-lg tracking-widest hover:bg-gold-dim transition-all gold-glow">
@@ -145,6 +145,42 @@ export default function LandingPage() {
             Join Free — Start Exploring!
           </Link>
           <p className="text-text-muted/50 font-head text-xs mt-4">No credit card required. New adventure every week. Safe for ages 8+.</p>
+        </div>
+      </section>
+
+      {/* FAQ — targets search queries */}
+      <section className="py-20 px-6 border-t border-white/8">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="font-head font-bold text-2xl text-white mb-3">Frequently Asked Questions</h2>
+          </div>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: [
+                { '@type': 'Question', name: 'What is Kids World Chase?', acceptedAnswer: { '@type': 'Answer', text: 'Kids World Chase is a free online geography game for children aged 8 to 13. Players solve fun riddles to find real locations around the world using Google Maps, earning points and climbing a global leaderboard.' } },
+                { '@type': 'Question', name: 'Is it a good educational geography game?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Every round teaches real world geography — countries, capitals, landmarks, rivers, and mountains. Kids discover fascinating facts about each location they find, making it one of the best educational map games available.' } },
+                { '@type': 'Question', name: 'What age is this geography game for?', acceptedAnswer: { '@type': 'Answer', text: 'Kids World Chase is designed for children aged 8 to 13. The difficulty levels — Explorer, Adventurer, Navigator, and Champion — are tailored to gradually build geography knowledge.' } },
+                { '@type': 'Question', name: 'Is it free and safe for children?', acceptedAnswer: { '@type': 'Answer', text: 'Kids World Chase is completely free to play and designed to be safe for children. No advertising, no in-app purchases required, and no inappropriate content.' } },
+                { '@type': 'Question', name: 'Can kids play this geography map game on a phone?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, Kids World Chase works on any device — phones, tablets, and computers. It is fully mobile-friendly.' } },
+              ],
+            }) }}
+          />
+          <div className="space-y-6">
+            {[
+              { q: 'What is Kids World Chase?', a: 'Kids World Chase is a free online geography game for children aged 8–13. Players solve fun riddles to find real locations around the world using Google Maps, earning points and climbing a global leaderboard.' },
+              { q: 'Is it a good educational geography game?', a: 'Every round teaches real world geography — countries, capitals, landmarks, rivers and mountains. Kids discover fascinating facts about each place they find, making it an educational map game they actually want to play.' },
+              { q: 'What age group is this geography game for?', a: 'Kids World Chase is designed for children aged 8–13. The difficulty levels — Explorer, Adventurer, Navigator, and Champion — build gradually so younger kids can play alongside older ones.' },
+              { q: 'Is it free and safe for children?', a: 'Completely free to play, safe for children, no advertising and no in-app purchases required. New geography adventure every week.' },
+            ].map(({ q, a }) => (
+              <div key={q} className="border border-white/8 p-6">
+                <h3 className="font-head font-bold text-white text-sm tracking-wide mb-2">{q}</h3>
+                <p className="text-text-muted font-head text-sm leading-relaxed">{a}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
