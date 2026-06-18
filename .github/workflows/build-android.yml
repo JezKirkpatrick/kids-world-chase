@@ -1,0 +1,58 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Bubblewrap CLI
+        run: npm install -g @bubblewrap/cli
+
+      - name: Create working directory
+        run: mkdir -p android-app
+
+      - name: Generate signing key
+        working-directory: android-app
+        run: |
+          keytool -genkeypair \
+            -v \
+            -keystore android.keystore \
+            -alias kidsworldchase \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -storepass KidsWC2026! \
+            -keypass KidsWC2026! \
+            -dname "CN=Kids World Chase, OU=App, O=KidsWorldChase, L=Auckland, S=Auckland, C=NZ"
+
+      - name: Init Bubblewrap project
+        working-directory: android-app
+        run: bubblewrap init --manifest https://www.kidsworldchase.net/manifest.webmanifest --directory .
+
+      - name: Build APK and AAB
+        working-directory: android-app
+        run: bubblewrap build --skipPwaValidation
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kidsworldchase-android
+          path: |
+            android-app/app-release-signed.apk
+            android-app/app-release-bundle.aab
+            android-app/android.keystore
+          retention-days: 30
