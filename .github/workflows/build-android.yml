@@ -20,7 +20,7 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Install Bubblewrap CLI
-        run: npm install -g @bubblewrap/cli
+        run: npm install -g @bubblewrap/cli@1.21.1
 
       - name: Create working directory
         run: mkdir -p android-app
@@ -35,19 +35,42 @@ jobs:
             -keyalg RSA \
             -keysize 2048 \
             -validity 10000 \
-            -storepass KidsWC2026! \
-            -keypass KidsWC2026! \
+            -storepass KidsWC2026 \
+            -keypass KidsWC2026 \
             -dname "CN=Kids World Chase, OU=App, O=KidsWorldChase, L=Auckland, S=Auckland, C=NZ"
+
+      - name: Print signing key fingerprint
+        working-directory: android-app
+        run: |
+          echo "=== SHA-256 FINGERPRINT (needed for assetlinks.json) ==="
+          keytool -list -v \
+            -keystore android.keystore \
+            -alias kidsworldchase \
+            -storepass KidsWC2026 \
+            | grep "SHA256:"
 
       - name: Init Bubblewrap project
         working-directory: android-app
-        run: bubblewrap init --manifest https://www.kidsworldchase.net/manifest.webmanifest --directory .
+        run: |
+          bubblewrap init \
+            --manifest https://www.kidsworldchase.net/manifest.webmanifest \
+            --directory . \
+            --packageId net.kidsworldchase.app \
+            --host www.kidsworldchase.net \
+            --name "Kids World Chase" \
+            --launcherName "KidsWC" \
+            --themeColor "#0B1628" \
+            --backgroundColor "#0B1628" \
+            --startUrl "/dashboard" \
+            --orientation "portrait" \
+            --signingKeyPath android.keystore \
+            --signingKeyAlias kidsworldchase
 
       - name: Build APK and AAB
         working-directory: android-app
         run: bubblewrap build --skipPwaValidation
 
-      - name: Upload APK artifact
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: kidsworldchase-android
@@ -55,4 +78,4 @@ jobs:
             android-app/app-release-signed.apk
             android-app/app-release-bundle.aab
             android-app/android.keystore
-          retention-days: 30
+          retention-days: 90
