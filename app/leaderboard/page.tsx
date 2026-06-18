@@ -4,6 +4,17 @@ export const revalidate = 60
 export const metadata = {
   title: 'Leaderboard',
   description: 'See who is leading the Kids World Chase global leaderboard this month. Live rankings of young geography explorers from around the world.',
+  openGraph: {
+    title: 'Kids World Chase Leaderboard — Top Young Explorers',
+    description: 'Live global rankings for Kids World Chase. See which young geography explorers are leading the way from around the world.',
+    url: 'https://www.kidsworldchase.net/leaderboard',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Kids World Chase Leaderboard — Top Young Explorers',
+    description: 'Who are the top young geography explorers this month?',
+  },
 }
 
 import { createClient } from '@/lib/supabase-server'

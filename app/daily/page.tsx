@@ -2,6 +2,17 @@
 export const metadata = {
   title: 'Daily Flag Puzzle',
   description: 'Reconstruct a world flag from scrambled pieces every day. Earn tokens and leaderboard points.',
+  openGraph: {
+    title: 'Kids World Chase Daily Flag Puzzle — Guess the Flag!',
+    description: 'A new world flag jigsaw puzzle every day for kids! Piece it together, name the country, earn tokens. Free geography game for ages 8–13.',
+    url: 'https://www.kidsworldchase.net/daily',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Kids World Chase Daily Flag Puzzle',
+    description: 'New flag jigsaw every day — can kids name it?',
+  },
 }
 
 import { redirect } from 'next/navigation'

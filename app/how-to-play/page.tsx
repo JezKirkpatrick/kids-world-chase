@@ -8,6 +8,18 @@ export const metadata: Metadata = {
   title: 'How to Play',
   description: 'Learn how to play Kids World Chase — the weekly geography adventure for ages 8–13. Solve fun clues, explore Google Maps, collect tokens, and climb the leaderboard!',
   keywords: ['how to play kids world chase', 'kids geography game guide', 'geography game for children rules'],
+  openGraph: {
+    title: 'How to Play Kids World Chase — Geography Game for Kids',
+    description: 'New to Kids World Chase? Learn how to solve fun riddles, explore Google Maps, collect tokens, and climb the leaderboard. Free geography adventure for ages 8–13.',
+    url: 'https://www.kidsworldchase.net/how-to-play',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'How to Play Kids World Chase',
+    description: 'The fun geography game guide for ages 8–13.',
+  },
+}
 }
 
 const STEPS = [

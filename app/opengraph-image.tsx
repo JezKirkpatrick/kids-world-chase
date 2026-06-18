@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'World Chase — Hunt the World'
+export const alt = 'Kids World Chase — Explore the World!'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -53,7 +53,7 @@ export default function OGImage() {
           marginBottom: 16,
           textShadow: '0 0 60px rgba(245,197,24,0.4)',
         }}>
-          WORLD CHASE
+          KIDS WORLD CHASE
         </div>
 
         {/* Tagline */}
@@ -63,12 +63,12 @@ export default function OGImage() {
           textTransform: 'uppercase',
           marginBottom: 40,
         }}>
-          Hunt the World · Claim the Crown
+          Explore the World · Learn Geography
         </div>
 
         {/* Pills */}
         <div style={{ display: 'flex', gap: 16 }}>
-          {['🗺 Weekly Hunts', '🏆 Global Leaderboard', '🪙 Earn Rewards'].map(label => (
+          {['🗺 Daily Flag Puzzles', '🏆 Global Leaderboard', '🎓 Ages 8–13'].map(label => (
             <div key={label} style={{
               background: 'rgba(255,255,255,0.07)',
               border: '1px solid rgba(255,255,255,0.15)',
@@ -89,7 +89,7 @@ export default function OGImage() {
           fontSize: 20, color: 'rgba(0,212,255,0.7)',
           letterSpacing: '0.15em',
         }}>
-          worldchase.net
+          kidsworldchase.net
         </div>
       </div>
     ),

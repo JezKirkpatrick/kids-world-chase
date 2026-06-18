@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import Link from 'next/link'
 import './globals.css'
 import ServiceWorkerRegister from '@/components/pwa/ServiceWorkerRegister'
 import InstallPrompt from '@/components/pwa/InstallPrompt'
@@ -67,21 +68,52 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" href="/apple-icon.png" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'VideoGame',
-            name: 'Kids World Chase',
-            description: 'The exciting weekly geography adventure for kids aged 8–13. Solve fun riddles, explore Google Maps, and race to the global leaderboard.',
-            url: 'https://www.kidsworldchase.net',
-            genre: ['Geography', 'Educational', 'Quiz', 'Puzzle'],
-            gamePlatform: 'Web Browser',
-            operatingSystem: 'Any',
-            applicationCategory: 'EducationalApplication',
-            typicalAgeRange: '8-13',
-            audience: { '@type': 'EducationalAudience', audienceType: 'Children', educationalRole: 'student' },
-            offers: { '@type': 'Offer', price: '0', priceCurrency: 'NZD', availability: 'https://schema.org/InStock' },
-            publisher: { '@type': 'Organization', name: 'Kids World Chase', url: 'https://www.kidsworldchase.net' },
-          }) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify([
+            {
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Kids World Chase',
+              url: 'https://www.kidsworldchase.net',
+              logo: 'https://www.kidsworldchase.net/icon.png',
+              sameAs: ['https://www.worldchase.net'],
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'Kids World Chase',
+              url: 'https://www.kidsworldchase.net',
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'SoftwareApplication',
+              name: 'Kids World Chase',
+              applicationCategory: 'GameApplication',
+              applicationSubCategory: 'Educational Geography Game',
+              operatingSystem: 'Any',
+              browserRequirements: 'Requires JavaScript',
+              url: 'https://www.kidsworldchase.net',
+              description: 'The exciting weekly geography adventure for kids aged 8–13. Solve fun riddles, explore Google Maps, and race to the global leaderboard.',
+              typicalAgeRange: '8-13',
+              audience: { '@type': 'EducationalAudience', audienceType: 'Children', educationalRole: 'student' },
+              offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
+              publisher: { '@type': 'Organization', name: 'Kids World Chase', url: 'https://www.kidsworldchase.net' },
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'VideoGame',
+              name: 'Kids World Chase',
+              description: 'The exciting weekly geography adventure for kids aged 8–13. Solve fun riddles, explore Google Maps, and race to the global leaderboard.',
+              url: 'https://www.kidsworldchase.net',
+              genre: ['Geography', 'Educational', 'Quiz', 'Puzzle'],
+              gamePlatform: 'Web Browser',
+              operatingSystem: 'Any',
+              applicationCategory: 'EducationalApplication',
+              typicalAgeRange: '8-13',
+              audience: { '@type': 'EducationalAudience', audienceType: 'Children', educationalRole: 'student' },
+              offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
+              publisher: { '@type': 'Organization', name: 'Kids World Chase', url: 'https://www.kidsworldchase.net' },
+            },
+          ]) }}
         />
       </head>
       <body>
@@ -93,6 +125,46 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ServiceWorkerRegister />
           <InstallPrompt />
         </OnlineUsersProvider>
+        <footer className="border-t border-white/8 bg-navy">
+          <div className="max-w-5xl mx-auto px-6 py-10">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-8">
+              <div>
+                <div className="font-head font-bold text-xs text-text-muted tracking-widest mb-3">PLAY</div>
+                <ul className="space-y-2">
+                  <li><Link href="/leaderboard" className="font-head text-xs text-text-muted hover:text-gold transition-colors">Leaderboard</Link></li>
+                  <li><Link href="/how-to-play" className="font-head text-xs text-text-muted hover:text-gold transition-colors">How to Play</Link></li>
+                  <li><Link href="/daily" className="font-head text-xs text-text-muted hover:text-gold transition-colors">Daily Flag Puzzle</Link></li>
+                  <li><Link href="/quiz" className="font-head text-xs text-text-muted hover:text-gold transition-colors">Quiz</Link></li>
+                </ul>
+              </div>
+              <div>
+                <div className="font-head font-bold text-xs text-text-muted tracking-widest mb-3">EXPLORE</div>
+                <ul className="space-y-2">
+                  <li><Link href="/hall-of-fame" className="font-head text-xs text-text-muted hover:text-gold transition-colors">Hall of Fame</Link></li>
+                  <li><Link href="/archive" className="font-head text-xs text-text-muted hover:text-gold transition-colors">Archive</Link></li>
+                  <li><Link href="/shop" className="font-head text-xs text-text-muted hover:text-gold transition-colors">Shop</Link></li>
+                </ul>
+              </div>
+              <div>
+                <div className="font-head font-bold text-xs text-text-muted tracking-widest mb-3">INFO</div>
+                <ul className="space-y-2">
+                  <li><Link href="/support" className="font-head text-xs text-text-muted hover:text-gold transition-colors">Support</Link></li>
+                  <li><Link href="/privacy" className="font-head text-xs text-text-muted hover:text-gold transition-colors">Privacy Policy</Link></li>
+                  <li><Link href="/terms" className="font-head text-xs text-text-muted hover:text-gold transition-colors">Terms of Service</Link></li>
+                </ul>
+              </div>
+              <div>
+                <div className="font-head font-bold text-xs text-text-muted tracking-widest mb-3">SISTER SITE</div>
+                <a href="https://www.worldchase.net" className="font-head text-xs text-electric hover:text-white transition-colors">World Chase ↗</a>
+                <p className="font-head text-xs text-text-muted mt-1 leading-relaxed">The adult geography game</p>
+              </div>
+            </div>
+            <div className="border-t border-white/8 pt-5 flex flex-col sm:flex-row items-center justify-between gap-2">
+              <span className="font-head font-bold text-gold text-sm tracking-widest">KIDS WORLD CHASE</span>
+              <span className="font-head text-xs text-text-muted">© {new Date().getFullYear()} Kids World Chase — Free Geography Game for Kids</span>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   )

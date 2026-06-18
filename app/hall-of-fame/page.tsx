@@ -3,6 +3,17 @@ export const dynamic = 'force-dynamic'
 export const metadata = {
   title: 'Hall of Fame',
   description: "Kids World Chase Hall of Fame — celebrating the greatest young geography explorers. Monthly champions and all-time legends aged 8–13.",
+  openGraph: {
+    title: 'Kids World Chase Hall of Fame — Greatest Young Explorers',
+    description: 'Celebrating the all-time top young geography explorers on Kids World Chase. Monthly champions and legends from around the world, ages 8–13.',
+    url: 'https://www.kidsworldchase.net/hall-of-fame',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Kids World Chase Hall of Fame',
+    description: 'The greatest young geography explorers of all time.',
+  },
 }
 
 import { createClient } from '@/lib/supabase-server'
