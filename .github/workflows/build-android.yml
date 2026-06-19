@@ -20,7 +20,13 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Install Bubblewrap CLI
-        run: npm install -g @bubblewrap/cli@1.21.1
+        run: npm install -g @bubblewrap/cli@1.24.1
+
+      - name: Pre-configure Bubblewrap (skip JDK/SDK prompts)
+        run: |
+          mkdir -p ~/.bubblewrap
+          echo "{\"jdkPath\":\"$JAVA_HOME\",\"androidSdkPath\":\"$ANDROID_HOME\"}" > ~/.bubblewrap/config.json
+          cat ~/.bubblewrap/config.json
 
       - name: Create working directory
         run: mkdir -p android-app
@@ -49,24 +55,30 @@ jobs:
             -storepass KidsWC2026 \
             | grep "SHA256:"
 
-      - name: Init Bubblewrap project (non-interactive)
+      - name: Init Bubblewrap project
         working-directory: android-app
         run: |
-          printf 'n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n' | \
-            bubblewrap init \
-              --manifest https://www.kidsworldchase.net/manifest.webmanifest \
-              --directory . || true
+          yes "" | bubblewrap init \
+            --manifest https://www.kidsworldchase.net/manifest.webmanifest \
+            --directory . 2>&1 || true
+          ls -la
+
+      - name: Patch signing key in twa-manifest.json
+        working-directory: android-app
+        run: |
           if [ -f twa-manifest.json ]; then
             node -e "
               const fs = require('fs');
               const m = JSON.parse(fs.readFileSync('twa-manifest.json'));
-              m.signingKey = { path: 'android.keystore', alias: 'kidsworldchase' };
+              m.signingKey = { path: '../android.keystore', alias: 'kidsworldchase' };
               fs.writeFileSync('twa-manifest.json', JSON.stringify(m, null, 2));
-              console.log('Patched twa-manifest.json');
+              console.log('signingKey patched');
+              console.log('packageId:', m.packageId);
             "
+          else
+            echo "ERROR: twa-manifest.json not created"
+            exit 1
           fi
-        env:
-          JAVA_HOME: ${{ env.JAVA_HOME }}
 
       - name: Build APK and AAB
         working-directory: android-app
@@ -74,9 +86,9 @@ jobs:
           printf 'KidsWC2026\nKidsWC2026\n' | \
             bubblewrap build --skipPwaValidation
 
-      - name: List output files
+      - name: Find output files
         working-directory: android-app
-        run: find . -name "*.apk" -o -name "*.aab" | head -20
+        run: find . -name "*.apk" -o -name "*.aab" 2>/dev/null
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
