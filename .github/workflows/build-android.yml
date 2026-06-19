@@ -39,7 +39,7 @@ jobs:
             -keypass KidsWC2026 \
             -dname "CN=Kids World Chase, OU=App, O=KidsWorldChase, L=Auckland, S=Auckland, C=NZ"
 
-      - name: Print signing key fingerprint
+      - name: Print SHA-256 fingerprint
         working-directory: android-app
         run: |
           echo "=== SHA-256 FINGERPRINT (needed for assetlinks.json) ==="
@@ -49,26 +49,34 @@ jobs:
             -storepass KidsWC2026 \
             | grep "SHA256:"
 
-      - name: Init Bubblewrap project
+      - name: Init Bubblewrap project (non-interactive)
         working-directory: android-app
         run: |
-          bubblewrap init \
-            --manifest https://www.kidsworldchase.net/manifest.webmanifest \
-            --directory . \
-            --packageId net.kidsworldchase.app \
-            --host www.kidsworldchase.net \
-            --name "Kids World Chase" \
-            --launcherName "KidsWC" \
-            --themeColor "#0B1628" \
-            --backgroundColor "#0B1628" \
-            --startUrl "/dashboard" \
-            --orientation "portrait" \
-            --signingKeyPath android.keystore \
-            --signingKeyAlias kidsworldchase
+          printf 'n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n' | \
+            bubblewrap init \
+              --manifest https://www.kidsworldchase.net/manifest.webmanifest \
+              --directory . || true
+          if [ -f twa-manifest.json ]; then
+            node -e "
+              const fs = require('fs');
+              const m = JSON.parse(fs.readFileSync('twa-manifest.json'));
+              m.signingKey = { path: 'android.keystore', alias: 'kidsworldchase' };
+              fs.writeFileSync('twa-manifest.json', JSON.stringify(m, null, 2));
+              console.log('Patched twa-manifest.json');
+            "
+          fi
+        env:
+          JAVA_HOME: ${{ env.JAVA_HOME }}
 
       - name: Build APK and AAB
         working-directory: android-app
-        run: bubblewrap build --skipPwaValidation
+        run: |
+          printf 'KidsWC2026\nKidsWC2026\n' | \
+            bubblewrap build --skipPwaValidation
+
+      - name: List output files
+        working-directory: android-app
+        run: find . -name "*.apk" -o -name "*.aab" | head -20
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -78,4 +86,5 @@ jobs:
             android-app/app-release-signed.apk
             android-app/app-release-bundle.aab
             android-app/android.keystore
+          if-no-files-found: warn
           retention-days: 90
