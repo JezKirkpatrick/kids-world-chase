@@ -20,7 +20,6 @@ export const metadata: Metadata = {
     description: 'The fun geography game guide for ages 8–13.',
   },
 }
-}
 
 const STEPS = [
   {
