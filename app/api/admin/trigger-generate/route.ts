@@ -22,17 +22,22 @@ export async function POST(req: NextRequest) {
     .select('id, name')
     .eq('status', 'active')
 
-  const eventsToGenerate: { id: string; name: string }[] = []
+  const eventsToGenerate: { id: string; name: string; missingRounds: number[] }[] = []
   for (const event of activeEvents ?? []) {
-    const { count } = await supabase
+    const { data: existing } = await supabase
       .from('challenges')
-      .select('id', { count: 'exact', head: true })
+      .select('round_number')
       .eq('event_id', event.id)
-    if ((count ?? 0) === 0) eventsToGenerate.push(event)
+    const existingRounds = new Set((existing ?? []).map(c => c.round_number))
+    const missingRounds = []
+    for (let r = 1; r <= 25; r++) {
+      if (!existingRounds.has(r)) missingRounds.push(r)
+    }
+    if (missingRounds.length > 0) eventsToGenerate.push({ ...event, missingRounds })
   }
 
   if (eventsToGenerate.length === 0)
-    return NextResponse.json({ success: true, message: 'No events need generation' })
+    return NextResponse.json({ success: true, message: 'All events complete' })
 
   const { data: recentEvents } = await supabase
     .from('monthly_events')
@@ -41,16 +46,18 @@ export async function POST(req: NextRequest) {
     .order('ends_at', { ascending: false })
     .limit(2)
 
-  const recentExclusions: string[] = []
-  for (const re of recentEvents ?? []) {
-    const { data: oldChallenges } = await supabase
+  const recentEventIds = (recentEvents ?? []).map(e => e.id)
+  let recentExclusions: string[] = []
+
+  if (recentEventIds.length > 0) {
+    const { data: recentChallenges } = await supabase
       .from('challenges')
-      .select('location_name, country')
-      .eq('event_id', re.id)
-    for (const c of oldChallenges ?? []) {
-      if (c.location_name) recentExclusions.push(c.location_name)
-      if (c.country) recentExclusions.push(c.country)
-    }
+      .select('location_name, location_country')
+      .in('event_id', recentEventIds)
+
+    recentExclusions = (recentChallenges ?? [])
+      .filter(c => c.location_name)
+      .map(c => c.location_country ? `${c.location_name}, ${c.location_country}` : c.location_name)
   }
 
   const results: Record<string, { generated: number; failed: number[] }> = {}
@@ -63,11 +70,22 @@ export async function POST(req: NextRequest) {
       : 'global_explorer'
 
     const theme = EVENT_THEMES.find(t => t.id === themeId) ?? EVENT_THEMES[0]
-    const existingLocations = [...recentExclusions]
+
+    const { data: existingChallenges } = await supabase
+      .from('challenges')
+      .select('location_name, location_country')
+      .eq('event_id', event.id)
+
+    const existingLocations = [
+      ...recentExclusions,
+      ...(existingChallenges ?? [])
+        .filter(c => c.location_name)
+        .map(c => c.location_country ? `${c.location_name}, ${c.location_country}` : c.location_name),
+    ]
     const failedRounds: number[] = []
     let generatedCount = 0
 
-    for (let round = 1; round <= 25; round++) {
+    for (const round of event.missingRounds) {
       try {
         const res = await fetch(`${origin}/api/admin/generate-challenge`, {
           method: 'POST',
@@ -86,9 +104,16 @@ export async function POST(req: NextRequest) {
         })
 
         if (res.ok) {
-          const data = await res.json()
-          if (data.location) existingLocations.push(data.location)
-          generatedCount++
+          const result = await res.json()
+          if (result.challenge?.location_name) {
+            const loc = result.challenge.location_country
+              ? `${result.challenge.location_name}, ${result.challenge.location_country}`
+              : result.challenge.location_name
+            existingLocations.push(loc)
+            generatedCount++
+          } else {
+            failedRounds.push(round)
+          }
         } else {
           failedRounds.push(round)
         }
