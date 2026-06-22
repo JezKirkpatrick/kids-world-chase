@@ -23,6 +23,8 @@ export async function POST(req: NextRequest) {
     const session = event.data.object as Stripe.Checkout.Session
     const { userId, tokens } = session.metadata ?? {}
 
+    if (session.payment_status !== 'paid') return NextResponse.json({ received: true })
+
     if (session.mode === 'subscription') {
       if (!userId) return NextResponse.json({ received: true })
       await supabase.from('profiles').update({

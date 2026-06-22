@@ -25,15 +25,17 @@ async function generateVsChallenge(admin: any, wager: number): Promise<{ id: str
     easy: '2–5 km', medium: '10–30 km', hard: '50–150 km', extreme: '200–500 km',
   }
 
-  const prompt = `You are the game master for WorldChase — a 1v1 geography duel. Generate ONE unique geography challenge, difficulty: ${difficulty.toUpperCase()}.
+  const prompt = `You are the friendly game master for Kids World Chase — a 1v1 geography duel for players aged 8–16. Generate ONE unique geography challenge, difficulty: ${difficulty.toUpperCase()}.
+
+CONTENT RULES: Age-appropriate only. No dark, violent, or adult themes. Use encouraging, fun language. Famous landmarks and well-known places preferred. Avoid obscure political conflicts, war sites, or disturbing history.
 
 DIFFICULTY:
-- EASY: World's most iconic landmarks (Eiffel Tower, Big Ben, Colosseum, etc). Map starts ${mapDistance[difficulty]} away.
-- MEDIUM: Remarkable but less globally-famous destinations. Map starts ${mapDistance[difficulty]} away.
-- HARD: Genuinely obscure — remote towns, unusual geology, niche cultural sites. Map starts ${mapDistance[difficulty]} away.
-- EXTREME: Most forgotten, bizarre, or remote locations on Earth. Map starts ${mapDistance[difficulty]} away.
+- EASY: World's most iconic landmarks (Eiffel Tower, Big Ben, Colosseum, Sydney Opera House). Map starts ${mapDistance[difficulty]} away.
+- MEDIUM: Remarkable but less globally-famous destinations — national parks, famous bridges, well-known cities. Map starts ${mapDistance[difficulty]} away.
+- HARD: Interesting but less obvious places — regional capitals, notable geographical features, recognised cultural sites. Map starts ${mapDistance[difficulty]} away.
+- EXTREME: Challenging but still age-appropriate — unusual geography, lesser-known wonders, historic towns. Map starts ${mapDistance[difficulty]} away.
 
-RULES: Riddle must never name the location. Clues: 1=hardest → 4=almost explicit.
+RULES: Riddle must never name the location. Clues: 1=hardest → 4=almost explicit. Keep language fun and encouraging.
 
 Respond with ONLY valid JSON — no markdown, no commentary:
 {"round_number":1,"difficulty":"${difficulty}","location_name":"official name","location_country":"country","location_lat":0.0,"location_lng":0.0,"map_start_lat":0.0,"map_start_lng":0.0,"street_view_heading":0,"street_view_pitch":0,"street_view_only":false,"street_view_question":null,"points_value":${wager * 10},"riddle_text":"3–5 sentence poetic riddle","clues":[{"order":1,"text":"hardest clue"},{"order":2,"text":"medium clue"},{"order":3,"text":"easier clue"},{"order":4,"text":"easiest clue"}],"answer_keywords":["primary answer","alternate spelling"],"fun_fact":"One interesting fact."}`
@@ -62,7 +64,7 @@ Respond with ONLY valid JSON — no markdown, no commentary:
 
   const { data: challenge, error: insertErr } = await admin
     .from('challenges')
-    .insert({ ...challengeData, event_id: anyEvent.id, time_limit_seconds: 1800 })
+    .insert({ ...challengeData, event_id: anyEvent.id, time_limit_seconds: 2400 })
     .select('id')
     .single()
 
@@ -89,7 +91,7 @@ export async function POST(req: NextRequest) {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   )
 
-  const { data: profile } = await admin.from('profiles').select('tokens').eq('id', user.id).single()
+  const { data: profile } = await admin.from('profiles').select('tokens').eq('id', user.id).maybeSingle()
   if (!profile || profile.tokens < wager) {
     return NextResponse.json({ error: `Not enough tokens (need ${wager})` }, { status: 400 })
   }
@@ -144,9 +146,10 @@ export async function POST(req: NextRequest) {
     }),
   ])
 
+  const queueExpiry = new Date(Date.now() + 60 * 60 * 1000).toISOString() // 1 hour to find a match
   const { data: match, error } = await admin
     .from('vs_matches')
-    .insert({ challenge_id: challenge.id, challenger_id: user.id, wager, match_type: 'queue' })
+    .insert({ challenge_id: challenge.id, challenger_id: user.id, wager, match_type: 'queue', expires_at: queueExpiry })
     .select('id')
     .single()
 

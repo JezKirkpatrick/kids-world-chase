@@ -112,7 +112,7 @@ export default function SettingsPage() {
   return (
     <div className="min-h-screen bg-navy text-text">
       <nav className="h-14 bg-navy-light/95 backdrop-blur border-b border-white/8 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30">
-        <Link href="/dashboard" className="font-head font-bold text-gold text-base tracking-widest hover:text-gold-dim transition-colors">≡ WORLD CHASE</Link>
+        <Link href="/dashboard" className="font-head font-bold text-gold text-base tracking-widest hover:text-gold-dim transition-colors">≡ KIDS WORLD CHASE</Link>
         <Link href="/dashboard" className="text-xs font-head text-text-muted hover:text-white transition-colors py-2 px-2">← DASHBOARD</Link>
       </nav>
 

@@ -33,6 +33,14 @@ export async function POST(req: NextRequest) {
     if (!match) return NextResponse.json({ error: 'Duel not found' }, { status: 404 })
     if (match.status !== 'active') return NextResponse.json({ error: 'Duel not active' }, { status: 400 })
 
+    // Enforce the 40-minute KWC VS time limit server-side
+    if (match.started_at) {
+      const elapsedMs = Date.now() - new Date(match.started_at).getTime()
+      if (elapsedMs > 2400 * 1000) {
+        return NextResponse.json({ error: 'Duel time limit exceeded' }, { status: 400 })
+      }
+    }
+
     const isChallenger = match.challenger_id === user.id
     const isOpponent = match.opponent_id === user.id
     if (!isChallenger && !isOpponent) return NextResponse.json({ error: 'Not a participant' }, { status: 403 })

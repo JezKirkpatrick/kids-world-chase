@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     // Find players who last logged in exactly 3 days ago and aren't banned
     const { data: players } = await supabase
       .from('profiles')
-      .select('id, tokens')
+      .select('id')
       .eq('last_login_date', threeDaysAgo)
       .eq('is_banned', false)
 
@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
           amount: 50,
           description: 'Come back bonus — we missed you! 🌍',
         }),
-        supabase.from('profiles').update({ tokens: (player.tokens ?? 0) + 50 }).eq('id', player.id),
+        supabase.rpc('adjust_tokens', { p_user_id: player.id, p_amount: 50 }),
       ])
       if (!txResult.error) awarded++
     }

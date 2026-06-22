@@ -4,14 +4,14 @@ export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-navy text-text">
       <nav className="h-14 bg-navy-light/95 backdrop-blur border-b border-white/8 flex items-center justify-between px-6">
-        <Link href="/" className="font-head font-bold text-gold tracking-widest hover:text-gold-dim transition-colors">≡ WORLD CHASE</Link>
+        <Link href="/" className="font-head font-bold text-gold tracking-widest hover:text-gold-dim transition-colors">≡ KIDS WORLD CHASE</Link>
         <Link href="/" className="text-xs font-head text-text-muted hover:text-white transition-colors">← HOME</Link>
       </nav>
 
       <div className="max-w-3xl mx-auto px-6 py-12">
         <div className="text-xs text-gold font-head tracking-[0.3em] mb-2">LEGAL</div>
         <h1 className="font-head font-bold text-3xl text-white mb-2">Privacy Policy</h1>
-        <p className="text-text-muted font-head text-xs mb-10">Last updated: May 2026</p>
+        <p className="text-text-muted font-head text-xs mb-10">Last updated: June 2026</p>
 
         <div className="space-y-8 font-head text-text-muted text-sm leading-relaxed">
 
@@ -66,7 +66,14 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-white font-bold text-base mb-2">7. Children's Privacy</h2>
-            <p>World Chase is not directed at children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal information, please contact us.</p>
+            <p>Kids World Chase is designed for players aged 8–13 and may be used by younger children with parental supervision. We take children's privacy seriously.</p>
+            <ul className="list-disc list-inside space-y-1 ml-2 mt-2">
+              <li>We collect only the information necessary to operate the game (email, username, game progress, and payment data for token purchases)</li>
+              <li>We do not share children's personal data with third parties for advertising or marketing purposes</li>
+              <li>Parents or guardians may request access to, correction of, or deletion of their child's account and data by contacting us via the Support page</li>
+              <li>Token purchases made by or on behalf of a child are the responsibility of the parent or guardian who holds the payment method</li>
+              <li>If you believe your child has registered without your knowledge, please contact us immediately and we will remove the account</li>
+            </ul>
           </section>
 
           <section>

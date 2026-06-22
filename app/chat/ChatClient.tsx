@@ -249,8 +249,15 @@ export default function ChatClient({ userId }: { userId: string }) {
     if (!content || sending) return
     setInput('')
     setSending(true)
-    const supabase = createClient()
-    await supabase.from('chat_messages').insert({ user_id: userId, content: content.slice(0, 300) })
+    const res = await fetch('/api/chat/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content }),
+    })
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}))
+      if (err?.error) setInput(content) // restore input if rejected
+    }
     setSending(false)
     setShowScrollBtn(false)
     setTimeout(() => scrollToBottom(true), 60)

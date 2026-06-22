@@ -355,7 +355,7 @@ export default function GamePage({ params }: PageProps) {
 
       <BattleHUD
         round={challenge.round_number}
-        totalRounds={20}
+        totalRounds={25}
         difficulty={challenge.difficulty}
         timeElapsed={timeElapsed}
         rank={rank}
