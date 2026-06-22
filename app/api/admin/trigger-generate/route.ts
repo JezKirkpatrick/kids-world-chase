@@ -10,7 +10,7 @@ const DIFFICULTY_FOR_ROUND = (round: number): string =>
 
 export async function POST(req: NextRequest) {
   const auth = req.headers.get('authorization')
-  if (auth !== `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`) {
+  if (auth !== `Bearer ${process.env.ADMIN_SECRET}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
