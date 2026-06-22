@@ -31,15 +31,21 @@ AVOID: ${eventTheme.avoidRegions}\n`
 ${themeSection}
 Generate ONE Street View Observation challenge for Round ${roundNumber} (${diffLabel} level).
 
-Pick a REAL, famous, visually interesting street or landmark that has OFFICIAL Google Street View car coverage (blue lines on Google Maps). The location must be well-known enough that it appears in children's geography books or school curricula. NOT user-contributed photos — must have navigable road arrows.
+CRITICAL — STREET VIEW COVERAGE REQUIREMENT:
+The location MUST have official Google Street View car coverage (blue road lines on Google Maps). Players are dropped into live Street View — if coverage doesn't exist the round completely breaks.
+SAFE REGIONS with reliable Street View: Western Europe, North America, Japan, South Korea, Australia, New Zealand, major cities in Brazil, South Africa, Southeast Asia.
+NEVER pick for EXPLORER/ADVENTURER: Pacific islands (Fiji, Samoa, Cook Islands, Tonga, Vanuatu, Solomon Islands), most rural Africa, Central Asia, or any remote island. These almost never have car Street View.
+For NAVIGATOR/CHAMPION levels: still must be on a road with confirmed blue car Street View coverage — not just a photo sphere from a tourist.
+
+Pick a well-known location that appears in children's geography books or school curricula. NOT user-contributed photos — must have navigable road arrows.
 
 The observation question must be answerable by looking carefully at the Street View imagery. Keep it fun and age-appropriate.
 
 LEVEL GUIDE for observation questions:
-- EXPLORER (easy): Count something large and obvious (flags, statues, vehicles) at a world-famous location. Answer must be a simple number 1–9 or an obvious visible object.
-- ADVENTURER (medium): Identify something specific (colour of a building, a symbol, an animal) at a well-known landmark.
-- NAVIGATOR (hard): Spot something that requires careful looking at a recognisable but less-famous location.
-- CHAMPION (extreme): Find a specific detail at a famous location that takes real concentration to spot.
+- EXPLORER (easy): A world-famous street or plaza in a major tourist city (Paris, London, Tokyo, New York, Rome, Sydney, etc.). Count something large and obvious (flags, statues, vehicles). Answer must be a simple number 1–9 or an obvious visible object.
+- ADVENTURER (medium): Identify something specific (colour of a building, a symbol, an animal) at a well-known landmark in a well-covered country.
+- NAVIGATOR (hard): Spot something that requires careful looking at a recognisable but less-famous location that still has confirmed car Street View.
+- CHAMPION (extreme): Find a specific detail at an interesting location — must still have blue car Street View lines, not just photo spheres.
 
 CLUE WRITING RULES:
 Players are dropped into Street View with no navigation help. Every clue MUST contain:
