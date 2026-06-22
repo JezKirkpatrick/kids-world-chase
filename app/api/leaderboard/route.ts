@@ -76,8 +76,9 @@ export async function GET(req: NextRequest) {
       pgRest('profiles?select=id,username,display_name,equipped_avatar,equipped_border,equipped_badge,equipped_title,country_code&limit=10000'),
     ])
 
+    const profilesArr = (profiles as any[]) ?? []
     const profileMap: Record<string, any> = {}
-    for (const p of (profiles as any[]) ?? []) profileMap[p.id] = p
+    for (const p of profilesArr) profileMap[p.id] = p
 
     const lbMap: Record<string, any> = {}
     for (const row of (lbRows as any[]) ?? []) lbMap[row.user_id] = row
@@ -103,7 +104,7 @@ export async function GET(req: NextRequest) {
     })
 
     const ranked = merged.map((e, i) => ({ ...e, rank: i + 1 }))
-    const total  = ranked.length
+    const total  = profilesArr.length  // all registered hunters, not just active this event
 
     // ── SMART MODE ────────────────────────────────────────────────────────
     if (mode === 'smart') {
