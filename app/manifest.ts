@@ -3,8 +3,8 @@ import type { MetadataRoute } from 'next'
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Kids World Chase',
-    short_name: 'KidsWC',
-    description: 'Explore the World. Become a Champion! Educational geography adventure for kids.',
+    short_name: 'KidsWorldChase',
+    description: 'The exciting weekly geography adventure for kids aged 8-13. Solve fun riddles, explore maps, and race to the leaderboard!',
     start_url: '/dashboard',
     display: 'standalone',
     background_color: '#0B1628',

@@ -1,5 +1,5 @@
 ﻿// Kids World Chase Service Worker
-const CACHE = 'kidsworldchase-v1'
+const CACHE = 'kidsworldchase-v2'
 
 // Assets to pre-cache on install
 const PRECACHE = [
@@ -72,10 +72,10 @@ self.addEventListener('fetch', event => {
     !event.request.url.startsWith(self.location.origin)
   ) return
 
-  // API routes â€” always network-only
+  // API routes — always network-only
   if (url.pathname.startsWith('/api/')) return
 
-  // Hashed static assets (_next/static) â€” cache-first, never expire
+  // Hashed static assets (_next/static) — cache-first, never expire
   if (url.pathname.startsWith('/_next/static/')) {
     event.respondWith(
       caches.match(event.request).then(cached => {
@@ -90,7 +90,7 @@ self.addEventListener('fetch', event => {
     return
   }
 
-  // All other requests â€” network-first
+  // All other requests — network-first
   event.respondWith(
     fetch(event.request)
       .then(res => {
