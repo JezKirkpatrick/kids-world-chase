@@ -27,7 +27,7 @@ export default function Icon() {
             letterSpacing: '-1px',
           }}
         >
-          WC
+          KWC
         </div>
       </div>
     ),

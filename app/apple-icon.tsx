@@ -32,10 +32,10 @@ export default function AppleIcon() {
             position: 'relative',
           }}
         >
-          <div style={{ color: '#F2B143', fontSize: 38, fontWeight: 900, fontFamily: 'sans-serif' }}>W</div>
+          <div style={{ color: '#F2B143', fontSize: 38, fontWeight: 900, fontFamily: 'sans-serif' }}>K</div>
         </div>
         <div style={{ color: '#F2B143', fontSize: 22, fontWeight: 700, fontFamily: 'sans-serif', letterSpacing: 4 }}>
-          CHASE
+          KIDS
         </div>
       </div>
     ),

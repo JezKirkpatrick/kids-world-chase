@@ -6,7 +6,7 @@ export default function OfflinePage() {
       <div className="text-5xl">🌍</div>
       <div className="font-head font-bold text-white text-2xl tracking-wider">YOU'RE OFFLINE</div>
       <p className="text-text-muted font-head max-w-sm">
-        No signal detected. Connect to the internet to continue hunting.
+        No signal detected. Connect to the internet to continue your adventure!
       </p>
       <button
         onClick={() => window.location.reload()}
