@@ -68,7 +68,7 @@ Respond with ONLY valid JSON — no markdown, no commentary:
     .from('challenges')
     .insert({ ...challengeData, event_id: anyEvent.id, time_limit_seconds: 2400 })
     .select('id')
-    .single()
+    .maybeSingle()
 
   if (insertErr) {
     console.error('VS challenge insert failed:', insertErr)
@@ -146,7 +146,7 @@ export async function POST(req: NextRequest) {
   }
 
   const { data: match, error } = await admin
-    .from('vs_matches').insert(insertData).select('id').single()
+    .from('vs_matches').insert(insertData).select('id').maybeSingle()
 
   if (error || !match) {
     console.error('vs_matches insert failed:', error)

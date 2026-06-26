@@ -66,7 +66,7 @@ Respond with ONLY valid JSON — no markdown, no commentary:
     .from('challenges')
     .insert({ ...challengeData, event_id: anyEvent.id, time_limit_seconds: 2400 })
     .select('id')
-    .single()
+    .maybeSingle()
 
   if (insertErr) {
     console.error('VS queue challenge insert failed:', insertErr)
@@ -151,7 +151,7 @@ export async function POST(req: NextRequest) {
     .from('vs_matches')
     .insert({ challenge_id: challenge.id, challenger_id: user.id, wager, match_type: 'queue', expires_at: queueExpiry })
     .select('id')
-    .single()
+    .maybeSingle()
 
   if (error || !match) {
     await admin.rpc('adjust_tokens', { p_user_id: user.id, p_amount: wager })

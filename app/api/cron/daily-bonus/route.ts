@@ -6,6 +6,7 @@ export const dynamic = 'force-dynamic'
 // Daily cron (08:00 UTC) — awards 50 tokens to players who haven't logged in
 // for exactly 3 days, to encourage them to come back and explore.
 export async function GET(req: NextRequest) {
+  if (!process.env.CRON_SECRET) return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
   const auth = req.headers.get('authorization')
   if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

@@ -160,7 +160,7 @@ export async function POST(req: NextRequest) {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-      const profile = await supabase.from('profiles').select('is_admin').eq('id', user.id).single()
+      const profile = await supabase.from('profiles').select('is_admin').eq('id', user.id).maybeSingle()
       if (!profile.data?.is_admin) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
@@ -204,7 +204,7 @@ export async function POST(req: NextRequest) {
     )
     const { data, error } = await service.from('challenges').insert({
       ...challengeData, event_id: eventId, time_limit_seconds: 2400,
-    }).select().single()
+    }).select().maybeSingle()
 
     if (error) throw error
 

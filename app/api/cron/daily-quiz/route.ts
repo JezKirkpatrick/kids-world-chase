@@ -18,6 +18,7 @@ function shuffleOptions(questions: any[]): any[] {
 }
 
 export async function GET(req: NextRequest) {
+  if (!process.env.CRON_SECRET) return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
   const auth = req.headers.get('authorization')
   if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -149,9 +150,13 @@ Generate all 20 questions. Start from id 0.`,
         event_id: event?.id ?? null,
       })
       .select()
-      .single()
+      .maybeSingle()
 
     if (error) throw error
+    if (!quiz) {
+      console.error('daily-quiz insert returned null — no row created')
+      return NextResponse.json({ error: 'Quiz insert returned no data' }, { status: 500 })
+    }
 
     return NextResponse.json({ success: true, quizId: quiz.id, date: today })
   } catch (err: any) {

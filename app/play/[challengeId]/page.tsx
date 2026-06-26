@@ -296,7 +296,14 @@ export default function GamePage({ params }: PageProps) {
     )
   }
 
-  const nextRound = challenge.round_number < 20 ? challenge.round_number + 1 : null
+  const nextRound = challenge.round_number < 25 ? challenge.round_number + 1 : null
+
+  const DIFF_LABELS: Record<string, string> = {
+    easy: 'Explorer',
+    medium: 'Adventurer',
+    hard: 'Navigator',
+    extreme: 'Champion',
+  }
 
   return (
     <div ref={mapContainerRef} className="relative h-dvh flex flex-col bg-navy overflow-hidden">
@@ -312,7 +319,7 @@ export default function GamePage({ params }: PageProps) {
             <div>
               <div className="text-orange-400 font-head font-bold tracking-widest text-sm mb-1">ROUND SKIPPED</div>
               <div className="text-white font-head font-bold text-xl">
-                Round {challenge.round_number} — {challenge.difficulty.toUpperCase()}
+                Round {challenge.round_number} — {DIFF_LABELS[challenge.difficulty] ?? challenge.difficulty}
               </div>
               <div className="text-text-muted font-head text-sm mt-1">{challenge.location_country}</div>
             </div>
@@ -460,7 +467,7 @@ export default function GamePage({ params }: PageProps) {
           onClick={() => { if (mobilePanelExpanded) { collapsePanel() } else { setMobilePanelExpanded(true) } }}
         >
           <div className="flex items-center gap-2">
-            <span className="text-xs font-head text-text-muted tracking-widest">R{challenge.round_number}/20</span>
+            <span className="text-xs font-head text-text-muted tracking-widest">R{challenge.round_number}/25</span>
             <DifficultyBadge difficulty={challenge.difficulty} />
           </div>
           <div className="flex items-center gap-3">

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase-server'
+import { createServiceClient } from '@/lib/supabase-server'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,7 +17,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Please describe the issue in more detail (20+ characters)' }, { status: 400 })
   }
 
-  const { error } = await supabase.from('support_tickets').insert({
+  const service = createServiceClient()
+  const { error } = await service.from('support_tickets').insert({
     user_id: user?.id ?? null,
     email: email.trim(),
     category,

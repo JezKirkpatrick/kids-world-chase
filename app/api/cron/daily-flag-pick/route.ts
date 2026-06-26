@@ -7,6 +7,7 @@ import { pingIndexNow } from '@/lib/indexnow'
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: NextRequest) {
+  if (!process.env.CRON_SECRET) return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
   const auth = req.headers.get('authorization')
   if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -86,7 +87,7 @@ Respond with ONLY valid JSON, nothing else:
       country_name: match.name,
     })
 
-    pingIndexNow()
+    try { await pingIndexNow() } catch {}
     return NextResponse.json({ success: true, date: tomorrowStr, country: match.name })
   } catch (err: any) {
     console.error(err)

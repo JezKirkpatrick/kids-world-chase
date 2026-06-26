@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
       const { data: created, error: upsertErr } = await supabase.from('player_progress').upsert({
         user_id: userId, event_id: challenge.event_id, challenge_id: challengeId,
         status: 'active', started_at: new Date().toISOString(),
-      }, { onConflict: 'user_id,challenge_id' }).select().single()
+      }, { onConflict: 'user_id,challenge_id' }).select().maybeSingle()
       if (!created) return NextResponse.json({ error: 'Progress not found', uid: userId, cid: challengeId, detail: upsertErr?.message }, { status: 404 })
       progress = created
     }

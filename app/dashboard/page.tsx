@@ -124,7 +124,7 @@ export default async function DashboardPage() {
           {[
             { label: 'TOKENS', value: profile?.tokens ?? 0, color: 'text-gold', href: '/tokens', glow: 'hover:shadow-[0_0_20px_rgba(245,197,24,0.15)]' },
             { label: 'SCORE',  value: leaderboardEntry?.total_score?.toLocaleString() ?? '0', color: 'text-electric', href: null, glow: '' },
-            { label: 'ROUNDS', value: `${completedCount}/20`, color: 'text-white', href: '/play', glow: '' },
+            { label: 'ROUNDS', value: `${completedCount}/25`, color: 'text-white', href: '/play', glow: '' },
             { label: 'DAYS LEFT', value: daysLeft, color: daysLeft <= 3 ? 'text-danger' : 'text-success', href: null, glow: '' },
           ].map((s, i) => (
             <div key={s.label} className={`animate-fade-up bg-navy-light border border-white/10 p-3 text-center transition-all ${s.glow}`}
@@ -169,13 +169,13 @@ export default async function DashboardPage() {
                   <span className="live-badge text-xs text-danger font-head font-bold tracking-widest">LIVE HUNT</span>
                 </div>
                 <h2 className="font-head font-bold text-2xl text-white mb-1">{event.name}</h2>
-                <p className="text-text-muted font-head text-sm mb-4">{completedCount} of 20 rounds · {daysLeft} days left</p>
+                <p className="text-text-muted font-head text-sm mb-4">{completedCount} of 25 rounds · {daysLeft} days left</p>
 
                 <div className="relative h-2 bg-white/10 overflow-hidden mb-1">
                   <div className="h-full transition-all duration-1000"
-                    style={{ width: `${(completedCount / 20) * 100}%`, background: 'linear-gradient(90deg, #f5c518, #00d4ff)' }} />
+                    style={{ width: `${(completedCount / 25) * 100}%`, background: 'linear-gradient(90deg, #f5c518, #00d4ff)' }} />
                 </div>
-                <div className="text-xs text-text-muted font-mono mb-5">{completedCount}/20 complete</div>
+                <div className="text-xs text-text-muted font-mono mb-5">{completedCount}/25 complete</div>
 
                 {isNewUser && (
                   <div className="text-text-muted font-head text-xs mb-4 border border-electric/20 bg-electric/5 p-3">

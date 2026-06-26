@@ -66,7 +66,7 @@ export default function SignupPage() {
 
       <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="w-full max-w-sm relative">
         <div className="text-center mb-8">
-          <Link href="/" className="font-head font-bold text-gold text-2xl tracking-widest hover:text-gold-dim transition-colors">WORLD CHASE</Link>
+          <Link href="/" className="font-head font-bold text-gold text-2xl tracking-widest hover:text-gold-dim transition-colors">KIDS WORLD CHASE</Link>
           <p className="text-text-muted font-head text-sm mt-2 tracking-wider">JOIN THE HUNT — FREE</p>
         </div>
 
