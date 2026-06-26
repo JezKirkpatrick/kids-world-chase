@@ -1,6 +1,5 @@
 import { ImageResponse } from 'next/og'
 
-export const runtime = 'edge'
 export const size = { width: 180, height: 180 }
 export const contentType = 'image/png'
 
@@ -13,29 +12,21 @@ export default function AppleIcon() {
           height: '100%',
           background: '#0B1628',
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 4,
+          borderRadius: '24px',
         }}
       >
-        {/* Globe ring */}
         <div
           style={{
-            width: 90,
-            height: 90,
-            borderRadius: '50%',
-            border: '6px solid #F2B143',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'relative',
+            color: '#F2B143',
+            fontSize: 72,
+            fontWeight: 900,
+            fontFamily: 'sans-serif',
+            letterSpacing: '-3px',
           }}
         >
-          <div style={{ color: '#F2B143', fontSize: 38, fontWeight: 900, fontFamily: 'sans-serif' }}>K</div>
-        </div>
-        <div style={{ color: '#F2B143', fontSize: 22, fontWeight: 700, fontFamily: 'sans-serif', letterSpacing: 4 }}>
-          KIDS
+          KWC
         </div>
       </div>
     ),
