@@ -66,7 +66,7 @@ export async function GET(req: NextRequest) {
           letterSpacing: '0.3em', marginBottom: 24,
           opacity: 0.8, display: 'flex',
         }}>
-          ≡ WORLD CHASE
+          ≡ KIDS WORLD CHASE
         </div>
 
         {/* Location */}

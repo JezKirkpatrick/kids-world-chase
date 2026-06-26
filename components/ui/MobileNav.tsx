@@ -141,7 +141,7 @@ export default function MobileNav({ pendingCount, isAdmin, hasUser, myId }: Prop
                 onClick={close}
                 className="col-span-2 px-4 py-4 font-head font-bold text-sm tracking-widest border-b border-white/5 hover:bg-white/5 active:bg-white/10 transition-colors text-green-400 text-center"
               >
-                ↗ WORLD CHASE
+                ↗ KIDS WORLD CHASE
               </a>
             </div>
 

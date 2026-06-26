@@ -242,7 +242,7 @@ export default function ShopPage() {
       {/* ── Nav ── */}
       <nav className="h-14 bg-navy-light/95 backdrop-blur border-b border-white/8 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30">
         <Link href="/dashboard" className="font-head font-bold text-gold tracking-widest hover:text-gold-dim transition-colors whitespace-nowrap">
-          ≡ WORLD CHASE
+          ≡ KIDS WORLD CHASE
         </Link>
         <div className="flex items-center gap-3 sm:gap-4">
           <Link href="/leaderboard" className="text-xs font-head text-text-muted hover:text-white transition-colors hidden sm:block">LEADERBOARD</Link>

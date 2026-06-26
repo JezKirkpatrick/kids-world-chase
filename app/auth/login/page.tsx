@@ -33,7 +33,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-navy flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <Link href="/" className="font-head font-bold text-gold text-2xl tracking-widest">WORLD CHASE</Link>
+          <Link href="/" className="font-head font-bold text-gold text-2xl tracking-widest">KIDS WORLD CHASE</Link>
           <p className="text-text-muted font-head text-sm mt-2 tracking-wider">HUNTER AUTHENTICATION</p>
         </div>
 

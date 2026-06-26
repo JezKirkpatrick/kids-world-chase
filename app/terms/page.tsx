@@ -4,7 +4,7 @@ export default function TermsPage() {
   return (
     <div className="min-h-screen bg-navy text-text">
       <nav className="h-14 bg-navy-light/95 backdrop-blur border-b border-white/8 flex items-center justify-between px-6">
-        <Link href="/" className="font-head font-bold text-gold tracking-widest hover:text-gold-dim transition-colors">≡ WORLD CHASE</Link>
+        <Link href="/" className="font-head font-bold text-gold tracking-widest hover:text-gold-dim transition-colors">≡ KIDS WORLD CHASE</Link>
         <Link href="/" className="text-xs font-head text-text-muted hover:text-white transition-colors">← HOME</Link>
       </nav>
 
