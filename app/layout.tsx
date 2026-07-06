@@ -6,6 +6,7 @@ import InstallPrompt from '@/components/pwa/InstallPrompt'
 import { ToastProvider } from '@/components/ui/Toast'
 import OnlineUsersProvider from '@/components/ui/OnlineUsersProvider'
 import NextTopLoader from 'nextjs-toploader'
+import ScrollToTop from '@/components/ui/ScrollToTop'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.kidsworldchase.net'),
@@ -117,6 +118,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <ScrollToTop />
         <NextTopLoader color="#F5A623" height={3} showSpinner={false} />
         <OnlineUsersProvider>
           <ToastProvider>
