@@ -52,9 +52,11 @@ function buildStreetViewPrompt(roundNumber: number, difficulty: string, existing
 FOCUS ON: ${eventTheme.regionFocus}
 AVOID: ${eventTheme.avoidRegions}\n`
     : ''
+  const usedCountries = [...new Set(existingLocations.map(loc => (loc.split(',').pop() ?? '').trim()).filter(c => c))]
+  const countryBan = usedCountries.length > 0 ? `\nBANNED COUNTRIES (already used — pick a different country): ${usedCountries.join(', ')}\n` : ''
 
   return `You are the friendly game master for "Kids World Chase" — an educational geography game designed for children aged 8–16.
-${themeSection}
+${themeSection}${countryBan}
 Generate ONE Street View Observation challenge for Round ${roundNumber} (${diffLabel} level).
 
 CRITICAL — STREET VIEW COVERAGE REQUIREMENT:
@@ -122,8 +124,15 @@ FOCUS ON: ${eventTheme.regionFocus}
 AVOID: ${eventTheme.avoidRegions}\n`
     : ''
 
+  const usedCountries = [...new Set(existingLocations
+    .map(loc => (loc.split(',').pop() ?? '').trim())
+    .filter(c => c))]
+  const countryBan = usedCountries.length > 0
+    ? `\nBANNED COUNTRIES (already used — pick a different country): ${usedCountries.join(', ')}\n`
+    : ''
+
   return `You are the friendly game master for "Kids World Chase" — an educational geography adventure game for children aged 8–16.
-${themeSection}
+${themeSection}${countryBan}
 Generate ONE exciting, educational challenge for Round ${roundNumber} (${diffLabel} level).
 
 GEOGRAPHIC DIVERSITY RULE: Pick a location in a DIFFERENT country than any place in the existing list below.
