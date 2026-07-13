@@ -60,8 +60,8 @@ export const EVENT_THEMES: EventTheme[] = [
     id: 'national_parks',
     label: 'National Parks',
     description: 'Stunning national parks and protected wild places',
-    regionFocus: 'Famous national parks worldwide: Yellowstone (USA), Yosemite (USA), Grand Canyon (USA), Kruger (South Africa), Serengeti (Tanzania), Banff (Canada), Fiordland (New Zealand), Torres del Paine (Chile), Virunga (Congo), Jim Corbett (India), Kakadu (Australia)',
-    avoidRegions: 'Use internationally recognised national parks only',
+    regionFocus: 'Famous national parks worldwide — spread across ALL continents. Africa: Masai Mara (Kenya), Amboseli (Kenya), Bwindi Impenetrable (Uganda), Volcanoes NP (Rwanda), Etosha (Namibia), Okavango Delta (Botswana), Simien Mountains (Ethiopia), Gorongosa (Mozambique). Americas: Iguaçu NP (Brazil), Amazon NP (Brazil), Los Glaciares/Patagonia (Argentina), Galápagos Islands (Ecuador), Manu NP (Peru), Corcovado (Costa Rica). Europe: Lake District (UK), Białowieża (Poland), Swiss National Park (Switzerland), Black Forest (Germany), Camargue (France), Pindus/Vikos (Greece), Rila (Bulgaria), Jotunheimen (Norway), Vatnajökull (Iceland). Asia: Jiuzhaigou (China), Zhangjiajie (China), Sagarmatha/Everest (Nepal), Chitwan (Nepal), Khao Yai (Thailand), Komodo (Indonesia), Taman Negara (Malaysia), Sundarbans (Bangladesh). Check the BANNED COUNTRIES list and never pick from those countries.',
+    avoidRegions: 'Stick to internationally recognised parks that appear in geography textbooks — avoid tiny unknown reserves',
   },
   {
     id: 'food_culture',
