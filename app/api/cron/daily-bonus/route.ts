@@ -3,7 +3,7 @@ import { createServiceClient } from '@/lib/supabase-server'
 
 export const dynamic = 'force-dynamic'
 
-// Daily cron (08:00 UTC) — awards 50 tokens to players who haven't logged in
+// Daily cron (08:00 UTC) — awards 5 tokens to players who haven't logged in
 // for exactly 3 days, to encourage them to come back and explore.
 export async function GET(req: NextRequest) {
   if (!process.env.CRON_SECRET) return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
@@ -34,10 +34,10 @@ export async function GET(req: NextRequest) {
         supabase.from('token_transactions').insert({
           user_id: player.id,
           type: 'bonus',
-          amount: 50,
+          amount: 5,
           description: 'Come back bonus — we missed you! 🌍',
         }),
-        supabase.rpc('adjust_tokens', { p_user_id: player.id, p_amount: 50 }),
+        supabase.rpc('adjust_tokens', { p_user_id: player.id, p_amount: 5 }),
       ])
       if (!txResult.error) awarded++
     }
