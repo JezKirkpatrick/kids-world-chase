@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 export const maxDuration = 300
 
 const DIFFICULTY_FOR_ROUND = (round: number): string =>
-  round <= 10 ? 'easy' : round <= 18 ? 'medium' : round <= 22 ? 'hard' : 'extreme'
+  round <= 5 ? 'easy' : round <= 10 ? 'medium' : round <= 15 ? 'hard' : 'extreme'
 
 export async function POST(req: NextRequest) {
   const auth = req.headers.get('authorization')
