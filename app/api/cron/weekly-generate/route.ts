@@ -9,7 +9,7 @@ import {
 } from '@/lib/generateChallengeInline'
 
 export const dynamic = 'force-dynamic'
-export const maxDuration = 60
+export const maxDuration = 300
 
 export async function GET(req: NextRequest) {
   const auth = req.headers.get('authorization')
@@ -78,6 +78,23 @@ export async function GET(req: NextRequest) {
         generatedCount++
       } else {
         failedRounds.push(round)
+      }
+    }
+
+    // Second pass: retry any rounds that failed in the first pass
+    if (failedRounds.length > 0) {
+      for (const round of failedRounds) {
+        const result = await generateChallengeInline({
+          roundNumber: round,
+          difficulty: DIFFICULTY_FOR_ROUND(round),
+          eventId: event.id,
+          existingLocations: [...existingLocations],
+          eventTheme: theme,
+        })
+        if (result) {
+          existingLocations.push(result)
+          generatedCount++
+        }
       }
     }
 
