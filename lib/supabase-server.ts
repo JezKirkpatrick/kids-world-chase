@@ -30,6 +30,15 @@ export function createClient() {
 export function createServiceClient() {
   return createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    {
+      global: {
+        // Next.js patches global fetch and will cache/reuse responses across
+        // deployments (Data Cache) unless told not to. Without this, service-client
+        // reads can silently serve stale data indefinitely regardless of
+        // `export const dynamic = 'force-dynamic'` in the calling route.
+        fetch: (url, options = {}) => fetch(url, { ...options, cache: 'no-store' }),
+      },
+    }
   )
 }
