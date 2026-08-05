@@ -2,13 +2,13 @@ import Link from 'next/link'
 import { cache } from 'react'
 import { getUser, getProfile } from '@/lib/auth'
 import { createClient } from '@/lib/supabase-server'
-import LogoutButton from '@/components/ui/LogoutButton'
 import ShareButton from '@/components/ui/ShareButton'
 import UnreadDMsBadge from '@/components/ui/UnreadDMsBadge'
 import { PlayDot, VsDot, ChatDot } from '@/components/ui/NavActivityDots'
 import VsNotifier from '@/components/vs/VsNotifier'
 import DMNotifier from '@/components/ui/DMNotifier'
 import MobileNav from '@/components/ui/MobileNav'
+import AccountMenu from '@/components/ui/AccountMenu'
 import { flagUrl } from '@/lib/flagEmoji'
 import Avatar from '@/components/ui/Avatar'
 
@@ -96,15 +96,7 @@ export default async function GlobalNav() {
         <Link href="/profile" className="shrink-0 hover:scale-105 transition-transform block" title="Profile">
           <Avatar emoji={avatar} border={border} size="sm" />
         </Link>
-        <div className="hidden sm:flex items-center gap-2">
-          <Link href="/support" className="text-xs font-head font-bold tracking-widest text-text-muted hover:text-electric transition-colors px-2 py-1">
-            SUPPORT
-          </Link>
-          <Link href="/settings" className="text-xs font-head font-bold tracking-widest text-text-muted hover:text-white transition-colors px-2 py-1">
-            SETTINGS
-          </Link>
-          <LogoutButton />
-        </div>
+        <AccountMenu />
         {/* Mobile hamburger — replaces inline links */}
         <MobileNav pendingCount={pendingCount} isAdmin={!!profile?.is_admin} hasUser={!!user} myId={user?.id} />
       </div>
