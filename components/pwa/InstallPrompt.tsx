@@ -62,7 +62,7 @@ export default function InstallPrompt() {
         <div className="flex items-start gap-3 max-w-lg mx-auto">
           <span className="text-2xl shrink-0 mt-0.5">📱</span>
           <div className="flex-1 min-w-0">
-            <div className="text-white font-head font-bold text-sm">Add World Chase to your Home Screen</div>
+            <div className="text-white font-head font-bold text-sm">Add Kids World Chase to your Home Screen</div>
             <div className="text-text-muted font-head text-xs mt-1 leading-relaxed">
               Tap <span className="text-gold font-bold">Share</span> at the bottom of your browser,
               then <span className="text-gold font-bold">"Add to Home Screen"</span>
@@ -84,7 +84,7 @@ export default function InstallPrompt() {
       <div className="flex items-center gap-3 max-w-lg mx-auto">
         <span className="text-2xl shrink-0">🌍</span>
         <div className="flex-1 min-w-0">
-          <div className="text-white font-head font-bold text-sm">Install World Chase</div>
+          <div className="text-white font-head font-bold text-sm">Install Kids World Chase</div>
           <div className="text-text-muted font-head text-xs">Play offline · Full screen · No browser bar</div>
         </div>
         <button onClick={install}
