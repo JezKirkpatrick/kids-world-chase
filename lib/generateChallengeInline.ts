@@ -282,6 +282,17 @@ async function tryGenerateOnce(params: {
       })
       if (isDuplicate) return null
     }
+    // Exact-landmark duplicate check — belt-and-braces alongside the country check
+    // above. The country check alone failed to stop the same landmark being picked
+    // for multiple rounds when two generation crons ran concurrently against the
+    // same event, each working from a stale snapshot (same bug class fixed on WorldChase).
+    if (challengeData.location_name) {
+      const nameLower = String(challengeData.location_name).toLowerCase().trim()
+      const isNameDuplicate = (existingEventChallenges ?? []).some(
+        c => (c.location_name ?? '').toLowerCase().trim() === nameLower
+      )
+      if (isNameDuplicate) return null
+    }
     const { data, error } = await supabase.from('challenges').insert({
       ...challengeData,
       event_id: eventId,
