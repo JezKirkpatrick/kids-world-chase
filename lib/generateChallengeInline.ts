@@ -154,6 +154,8 @@ For NAVIGATOR/CHAMPION levels: still must be on a road with confirmed blue car S
 
 Pick a well-known location that appears in children's geography books or school curricula. NOT user-contributed photos — must have navigable road arrows.
 
+CRITICAL — NO VAGUE QUESTIONS: street_view_question must target ONE specific, nameable detail — an exact count, an exact word/colour/symbol/animal. NEVER a broad, open-ended question like "What covers the buildings?" or "What do you see around you?" — a vague question gives the kid no idea what format of answer is even expected, and there is no single correct answer to grade against. If the question is a count, the underlying object must be countable at a glance without ambiguity — avoid counting things where the real number varies wildly depending on how far the player looks (e.g. never "how many signs/decorations" in a visually busy scene — pick a single named element there instead). The final clue MUST literally state the exact correct answer in plain words, not just hint at it — the kid should never finish reading the last clue still unsure what to type.
+
 LEVEL GUIDE for observation questions:
 - EXPLORER (easy): A world-famous street or plaza in a major tourist city (Paris, London, Tokyo, New York, Rome, Sydney, etc.). Count something large and obvious (flags, statues, vehicles). Answer must be a simple number 1–9 or an obvious visible object.
 - ADVENTURER (medium): Identify something specific (colour of a building, a symbol, an animal) at a well-known landmark in a well-covered country.
