@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { waitUntil } from '@vercel/functions'
 import { createClient } from '@supabase/supabase-js'
 import { anthropic } from '@/lib/anthropic'
 
 export const dynamic = 'force-dynamic'
+export const maxDuration = 300
 
 // Guarantee truly random answer positions regardless of what Claude outputs
 function shuffleOptions(questions: any[]): any[] {
@@ -17,6 +19,9 @@ function shuffleOptions(questions: any[]): any[] {
   })
 }
 
+// cron-job.org's request timeout is hard-capped at 30s (can't be raised) but the
+// AI question-generation call alone can exceed that. Respond immediately and do the
+// real work via waitUntil, so Vercel keeps the function alive past the response.
 export async function GET(req: NextRequest) {
   if (!process.env.CRON_SECRET) return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
   const auth = req.headers.get('authorization')
@@ -24,6 +29,11 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  waitUntil(runDailyQuiz())
+  return NextResponse.json({ accepted: true })
+}
+
+async function runDailyQuiz() {
   const service = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -40,7 +50,8 @@ export async function GET(req: NextRequest) {
       .maybeSingle()
 
     if (existing) {
-      return NextResponse.json({ message: 'Already exists', quizId: existing.id })
+      console.log('[daily-quiz] Already exists', existing.id)
+      return
     }
 
     // Get active event for leaderboard scoring
@@ -154,13 +165,12 @@ Generate all 20 questions. Start from id 0.`,
 
     if (error) throw error
     if (!quiz) {
-      console.error('daily-quiz insert returned null — no row created')
-      return NextResponse.json({ error: 'Quiz insert returned no data' }, { status: 500 })
+      console.error('[daily-quiz] Insert returned null — no row created')
+      return
     }
 
-    return NextResponse.json({ success: true, quizId: quiz.id, date: today })
+    console.log('[daily-quiz] Created', quiz.id, today)
   } catch (err: any) {
-    console.error(err)
-    return NextResponse.json({ error: err?.message ?? 'Internal error' }, { status: 500 })
+    console.error('[daily-quiz] Failed', err)
   }
 }
