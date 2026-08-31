@@ -154,6 +154,13 @@ For NAVIGATOR/CHAMPION levels: still must be on a road with confirmed blue car S
 
 Pick a well-known location that appears in children's geography books or school curricula. NOT user-contributed photos — must have navigable road arrows.
 
+CRITICAL — MATCH THE VIEW TO THE QUESTION: This is the single most common reason generations get rejected. Before writing the question, think about what the exact heading/pitch will actually show:
+- If asking about something near the TOP of a tall structure (flags, a spire, an upper floor, a clock face), you are usually standing too close and too low to see it — either pick coordinates far enough away that the whole structure fits in frame, or set street_view_pitch noticeably upward (20-40) and confirm the top is genuinely in view at that distance.
+- NEVER ask about a feature "at the very top" of something while standing directly at its base — from directly underneath, the top is rarely visible at all.
+- If asking about the EXTERIOR (entrance doors, facade colour, outer walls), make sure the coordinates are actually outside the building, not inside it — many famous landmarks have Street View coverage from interior tours (museum halls, church naves, station platforms) mixed in with the outdoor coverage.
+- If asking about STREET-LEVEL details (road markings, crossing colours, pavement), make sure the coordinates are on the open street, not inside a subway station, tunnel, or underpass — famous plazas and crossings often have underground transit coverage nearby that looks similar in search results but shows a completely different scene.
+- When in doubt, pick a question about something clearly at ground level, facing outward on an open street — these are the most reliable to verify.
+
 CRITICAL — NO VAGUE QUESTIONS: street_view_question must target ONE specific, nameable detail — an exact count, an exact word/colour/symbol/animal. NEVER a broad, open-ended question like "What covers the buildings?" or "What do you see around you?" — a vague question gives the kid no idea what format of answer is even expected, and there is no single correct answer to grade against. If the question is a count, the underlying object must be countable at a glance without ambiguity — avoid counting things where the real number varies wildly depending on how far the player looks (e.g. never "how many signs/decorations" in a visually busy scene — pick a single named element there instead). The final clue MUST literally state the exact correct answer in plain words, not just hint at it — the kid should never finish reading the last clue still unsure what to type.
 
 LEVEL GUIDE for observation questions:
