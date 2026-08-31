@@ -60,14 +60,14 @@ async function verifyStreetView(lat: number, lng: number): Promise<boolean> {
 async function verifyStreetViewContent(
   lat: number, lng: number, heading: number, pitch: number,
   question: string, riddleText: string
-): Promise<boolean> {
+): Promise<{ ok: boolean; reason?: string }> {
   const mapsKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-  if (!mapsKey) return true
+  if (!mapsKey) return { ok: true }
   try {
     const imgRes = await fetch(
       `https://maps.googleapis.com/maps/api/streetview?size=640x400&location=${lat},${lng}&heading=${heading}&pitch=${pitch}&fov=90&key=${mapsKey}`
     )
-    if (!imgRes.ok) return true
+    if (!imgRes.ok) return { ok: true }
     const buf = Buffer.from(await imgRes.arrayBuffer())
     const base64 = buf.toString('base64')
 
@@ -85,9 +85,9 @@ async function verifyStreetViewContent(
     const raw = response.content[0].type === 'text' ? response.content[0].text : '{}'
     const cleaned = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim()
     const parsed = JSON.parse(cleaned)
-    return parsed.visible === true
-  } catch {
-    return true // vision check itself failing shouldn't block generation — fail open
+    return { ok: parsed.visible === true, reason: parsed.reason }
+  } catch (e) {
+    return { ok: true, reason: `check threw: ${String(e)}` } // vision check itself failing shouldn't block generation — fail open
   }
 }
 
@@ -303,8 +303,19 @@ export async function POST(req: NextRequest) {
         challengeData.street_view_heading ?? 0, challengeData.street_view_pitch ?? 0,
         challengeData.street_view_question ?? '', challengeData.riddle_text ?? ''
       )
-      if (!contentMatches) {
-        return NextResponse.json({ error: 'AI scene does not match what is actually visible at these coordinates — regenerate' }, { status: 422 })
+      if (!contentMatches.ok) {
+        return NextResponse.json({
+          error: 'AI scene does not match what is actually visible at these coordinates — regenerate',
+          debug: {
+            reason: contentMatches.reason,
+            question: challengeData.street_view_question,
+            riddle_text: challengeData.riddle_text,
+            lat: challengeData.location_lat,
+            lng: challengeData.location_lng,
+            heading: challengeData.street_view_heading,
+            pitch: challengeData.street_view_pitch,
+          },
+        }, { status: 422 })
       }
     }
 
