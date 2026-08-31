@@ -47,7 +47,7 @@ async function verifyStreetViewContent(
         role: 'user',
         content: [
           { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: base64 } },
-          { type: 'text', text: `This is the exact Google Street View frame a player (a child aged 8-13) will see for a geography game round. The player must answer this by looking at ONLY this image: "${question}"\nScene the game claims this is: "${riddleText}"\nIs the described object/scene actually visible and answerable from this exact frame — not "probably nearby" or "would be visible if rotated", but literally in this image? Reply with ONLY JSON, no markdown: {"visible": true or false, "reason": "one short sentence"}` }
+          { type: 'text', text: `This is the exact Google Street View frame a player will see for a geography game round. The player must answer this by looking at ONLY this image: "${question}"\nScene the game claims this is: "${riddleText}"\nIs the described object/scene actually visible and answerable from this exact frame — not "probably nearby" or "would be visible if rotated", but literally in this image? Reply with ONLY JSON, no markdown: {"visible": true or false, "reason": "one short sentence"}` }
         ]
       }]
     })
