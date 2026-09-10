@@ -315,8 +315,9 @@ async function tryGenerateOnce(params: {
   eventId: string
   existingLocations: string[]
   eventTheme?: EventTheme
+  forceNonStreetView?: boolean
 }): Promise<string | null> {
-  const { roundNumber, difficulty, eventId, existingLocations, eventTheme } = params
+  const { roundNumber, difficulty, eventId, existingLocations, eventTheme, forceNonStreetView } = params
 
   try {
     // Query current event's challenges BEFORE calling AI — used for both prompt ban list and duplicate check
@@ -330,7 +331,7 @@ async function tryGenerateOnce(params: {
       .map(c => c.location_country ? `${c.location_name}, ${c.location_country}` : c.location_name)
 
     const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
-    const isStreetView = STREET_VIEW_ROUNDS.includes(roundNumber)
+    const isStreetView = STREET_VIEW_ROUNDS.includes(roundNumber) && !forceNonStreetView
     const prompt = isStreetView
       ? buildStreetViewPrompt(roundNumber, difficulty, existingLocations, eventTheme, currentEventLocations)
       : buildPrompt(roundNumber, difficulty, existingLocations, eventTheme, currentEventLocations)
@@ -491,10 +492,23 @@ export async function generateChallengeInline(params: {
   existingLocations: string[]
   eventTheme?: EventTheme
 }): Promise<string | null> {
-  const attempts = STREET_VIEW_ROUNDS.includes(params.roundNumber) ? 4 : 2
+  const isStreetViewRound = STREET_VIEW_ROUNDS.includes(params.roundNumber)
+  const attempts = isStreetViewRound ? 4 : 2
   for (let i = 0; i < attempts; i++) {
     const result = await tryGenerateOnce(params)
     if (result !== null) return result
+  }
+
+  // Street View generation for this round exhausted every attempt (observed live:
+  // a Street View round can pass coverage checks at generation time but still show
+  // "no coverage" to real players, or fail generation outright and leave a hole that
+  // hard-blocks progress for every player). A round in the regular draggable-map
+  // format beats a permanently missing/broken round — fall back to it.
+  if (isStreetViewRound) {
+    for (let i = 0; i < 2; i++) {
+      const result = await tryGenerateOnce({ ...params, forceNonStreetView: true })
+      if (result !== null) return result
+    }
   }
   return null
 }
